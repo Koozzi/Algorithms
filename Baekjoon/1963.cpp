@@ -3,7 +3,7 @@
 
 using namespace std;
 
-int start_num, end_num, found_num;
+int start_num, end_num;
 int isPrime[10000] = {0};
 int depth[10000] = {0};
 int num_arr[4] = {0};
@@ -17,19 +17,7 @@ void eratos(){
     }
 }
 
-void divide(int num){
-    num_arr[0] = num / 1000;
-    num_arr[1] = (num - 1000 * num_arr[0]) / 100;
-    num_arr[2] = (num - 1000 * num_arr[0] - 100 * num_arr[1]) / 10;
-    num_arr[3] = num - 1000 * num_arr[0] - 100 * num_arr[1] - 10 * num_arr[2];
-}
-
-int combine(){
-    return 1000 * num_arr[0] + 100 * num_arr[1] + 10 * num_arr[2] + num_arr[3];
-}
-
 void BFS(int start){
-    found_num = 0;
     for(int i = 0 ; i < 10000 ; i++){
         depth[i] = 0;
         visited[i] = false;
@@ -52,9 +40,6 @@ void BFS(int start){
                     depth[next] += depth[current] + 1;
                     q.push(next);
                     visited[next] = true;
-                    if(next == end_num){
-                        found_num = 1;
-                    }
                 }
             }
         }
