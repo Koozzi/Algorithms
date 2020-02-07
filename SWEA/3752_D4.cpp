@@ -3,14 +3,16 @@
 
 using namespace std;
 
+int q_num[101] = {0};
+int sum_point[101][10001] = {0};
+
 int main(){
     int T;
     cin >> T;
     for(int t = 1 ; t <= T ; t++){
         int num;
         int max_point = 0;
-        int q_num[101] = {0};
-        int sum_point[101][10001] = {0};
+
         sum_point[0][0] = 1;
         cin >> num;
         for(int i = 1 ; i <= num ; i++){
@@ -32,6 +34,12 @@ int main(){
             result += sum_point[num][i];
         }
         cout << "#" << t << " " << result << "\n";
+        for(int i = 0 ; i <= num ; i++){
+            q_num[i] = 0;
+            for(int j = 0 ; j <= max_point ; j++){
+                sum_point[i][j] = 0;
+            }
+        }
     }
     return 0;
 }
