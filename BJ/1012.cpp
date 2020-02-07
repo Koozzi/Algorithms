@@ -47,7 +47,7 @@ int main(){
         cin >> M >> N >> K;
         for(int i = 0 ; i < K ; i++){
             cin >> a >> b;
-            map[a][b] = 1;
+            map[b][a] = 1;
         }
         for(int i = 0 ; i < N ; i++){
             for(int j = 0 ; j < M ; j++){
