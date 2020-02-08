@@ -46,6 +46,8 @@ void BFS(int startI, int startJ){
 int main(){
     int T = 10;
     for(int t = 1 ; t <= T ; t++){
+        int a;
+        cin >> a;
         char inputData[16][16];
         for(int i = 0 ; i < 16 ; i++){
             cin >> inputData[i];

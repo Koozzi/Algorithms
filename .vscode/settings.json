@@ -3,6 +3,7 @@
         "iostream": "cpp",
         "queue": "cpp",
         "ratio": "cpp",
-        "vector": "cpp"
+        "vector": "cpp",
+        "algorithm": "cpp"
     }
 }
