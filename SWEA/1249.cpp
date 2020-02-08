@@ -5,9 +5,9 @@
 using namespace std;
 
 int M;
-int map[102][102];
-int cost[102][102];
-bool visited[102][102];
+int map[100][100];
+int cost[100][100];
+bool visited[100][100];
 
 typedef struct{
     int moveI, moveJ;
@@ -48,7 +48,7 @@ int main(){
     for(int t = 1 ; t <= T ; t++){
         init();
         cin >> M;
-        char inputData[102][102];
+        char inputData[101][101];
         for(int i = 0 ; i < M ; i++){
             cin >> inputData[i];
             for(int j = 0 ; j < M ; j++){
@@ -56,13 +56,7 @@ int main(){
             }
         }
         BFS();
-        for(int i = 0 ; i < M ; i++){
-            for(int j = 0 ; j < M ; j++){
-                cout << cost[i][j] << " ";
-            }
-            cout << "\n";
-        }
-        cout << "#" << t << " " << cost[M][M] << "\n";
+        cout << "#" << t << " " << cost[M-1][M-1] << "\n";
     }
     return 0;
 }
