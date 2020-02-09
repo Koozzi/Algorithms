@@ -76,6 +76,7 @@ int main(){
             cin >> map[i][j];
         }
     }
+    // 우선 1년이 지나기전에 이미 두 개 이상의 섬으로 나눠져있는지 확인
     memset(visited, false, sizeof(visited));
     for(int i = 1 ; i <= M ; i++){
         for(int j = 1 ; j <= N ; j++){
@@ -93,7 +94,7 @@ int main(){
         while(1){
             memset(visited, false, sizeof(visited));
             dayCount++;
-            melt();
+            melt(); // 녹여
             check = 0;
             for(int i = 1 ; i <= M ; i++){
                 for(int j = 1 ; j <= N ; j++){

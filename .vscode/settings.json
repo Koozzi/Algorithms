@@ -4,6 +4,7 @@
         "queue": "cpp",
         "ratio": "cpp",
         "vector": "cpp",
-        "algorithm": "cpp"
+        "algorithm": "cpp",
+        "utility": "cpp"
     }
 }
