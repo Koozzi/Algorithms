@@ -11,7 +11,6 @@ char arr[9][9];
 void searchDown(int startI, int startJ){
     checkCount = 0;
     if(startI + N > 8){
-        // cout << startI << " " << startJ << "\n";
         return;
     }
     vector<char> v;
@@ -26,17 +25,11 @@ void searchDown(int startI, int startJ){
     if(checkCount == N/2){
         ans++;
     }
-    // cout << startI << " " << startJ << " " << checkCount << " ";
-    // for(int i =  0 ; i < v.size() ; i++){
-    //     cout << v[i]; 
-    // }
-    // cout <<"\n";
 }
 
 void searchRight(int startI, int startJ){
     checkCount = 0;
     if(startJ + N > 8){
-        // cout << startI << " " << startJ << "\n";
         return;
     }
     vector<char> v;
@@ -51,11 +44,6 @@ void searchRight(int startI, int startJ){
     if(checkCount == N/2){
         ans++;
     }
-    // cout << startI << " " << startJ << " " << checkCount << " ";
-    // for(int i =  0 ; i < v.size() ; i++){
-    //     cout << v[i]; 
-    // }
-    // cout <<"\n";
 }
 
 int main(){
