@@ -10,7 +10,6 @@ int longest = 0;
 
 bool visited[10001];
 
-vector<int> v[10001];
 vector<pair<int ,int>> node[10001];
 
 int BFS(int startI){
