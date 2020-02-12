@@ -1,18 +1,30 @@
 #include <iostream>
-
+#include <vector>
 using namespace std;
 
 int main(){
-    char inputData[16][16];
-    for(int i = 0 ; i < 16 ; i++){
-        cin >> inputData[i];
-    }
-    cout << "-----------------------" << "\n";
-    for(int i = 0 ; i < 16 ; i++){
-        for(int j = 0 ; j < 16 ; j++){
-            cout << inputData[i][j];
-        }
-        cout << "\n";
-    }
+    vector<char> a;
+    vector<char> b[10];
+    a.push_back('b');
+    cout << a[0] << "\n";
+
+    char A = 'c';
+    a.push_back(A);
+    cout << a[1] << "\n";
+
+    a[1] = 'G';
+    cout << a[1] << "\n";   
+
+    a.erase(a.begin() + 1);
+    
+
+
+    b[5].push_back(A);
+    cout << b[5][0] << "\n";
+
+    b[5][0] = 'H';
+    cout << b[5][0] << "\n";
+
+    
     return 0;
 }

@@ -74,7 +74,6 @@ void escape(){
 }
 
 int main(){
-    
     cin >> I >> J;
     for(int i = 0 ; i < I ; i++){
         cin >> map[i];
