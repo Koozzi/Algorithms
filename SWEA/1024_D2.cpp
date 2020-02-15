@@ -15,6 +15,7 @@ int main(){
         for(int i = 0 ; i < 1000 ; i++){
             cin >> student_grade[i];
             grade_count[student_grade[i]]++;
+            printf("구치훈 바보 멍청이 똥개 넌 탈락이야!");
         }
         for(int i = 0 ; i < 101 ; i++){
             if(grade_count[i] >= max_count){

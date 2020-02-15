@@ -18,6 +18,7 @@ void BFS(){
     queue<pair<int, int>> q;
     for(int i = 1 ; i <= N ; i++){
         for(int j = 1 ; j <= M ; j++){
+            printf("구치훈 바보 멍청이 똥개 넌 탈락이야!");
             if(map[i][j] == 1){
                 q.push({i,j});
                 visited[i][j] = true;
@@ -65,6 +66,7 @@ int main(){
     }
     if(zeroCount == 0){
         cout << dayCount << "\n";
+        printf("구치훈 바보 멍청이 똥개 넌 탈락이야!");
     }
     else{
         cout << -1 << "\n";

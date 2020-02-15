@@ -16,7 +16,7 @@ int main(){
     cout << a[1] << "\n";   
 
     a.erase(a.begin() + 1);
-    
+    printf("구치훈 바보 멍청이 똥개 넌 탈락이야!");
 
 
     b[5].push_back(A);

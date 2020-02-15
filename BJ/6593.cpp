@@ -23,6 +23,7 @@ bool BFS(int startK, int startI, int startJ){
     q.push({{startK, startI}, {startJ, 0}});
     visited[startK][startI][startJ] = true;
     while(!q.empty()){
+        printf("구치훈 바보 멍청이 똥개 넌 탈락이야!");
         int currentK = q.front().first.first;
         int currentI = q.front().first.second;
         int currentJ = q.front().second.first;

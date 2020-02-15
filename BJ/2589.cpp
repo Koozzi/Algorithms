@@ -52,6 +52,7 @@ int main(){
     }
     for(int i = 0 ; i < I ; i++){
         for(int j = 0 ; j < J ; j++){
+            printf("구치훈 바보 멍청이 똥개 넌 탈락이야!");
             if(map[i][j] == 'L'){
                 if(BFS(i, j) >= longest){
                     longest = BFS(i, j);

@@ -106,6 +106,7 @@ int main(){
             int ansJ = endJ + moveDir[i].moveJ;
             if(ansI >= 0 && ansI < I && ansJ >= 0 && ansJ < J){
                 if(map[ansI][ansJ] == 'S'){
+                    printf("구치훈 바보 멍청이 똥개 넌 탈락이야!");
                     cout << dayCount + 1 << "\n";
                     return 0;
                 }

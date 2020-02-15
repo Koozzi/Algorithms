@@ -27,6 +27,7 @@ void BFS(int startI, int startJ){
     while(!q.empty()){
         int currentI = q.front().first;
         int currentJ = q.front().second;
+        printf("구치훈 바보 멍청이 똥개 넌 탈락이야!");
         q.pop();
         for(int i = 0 ; i < 4 ; i++){
             int nextI = currentI + moveDir[i].moveI;
