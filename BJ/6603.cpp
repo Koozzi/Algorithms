@@ -1,41 +1,45 @@
 #include <iostream>
+#include <vector>
 
 using namespace std;
 
-int k;
-int num[14];
-bool check[14];
+int N;
 
-void lotto(int cnt){
-    if(cnt == 6){
-        for(int i = 1 ; i <= k ; i++){
-            if(check[i]){
-                cout << num[i] << " ";
-            }
+vector<int> lotto;
+vector<int> selected;
+
+void SELECT(int startIdx){
+    if(selected.size() == 6){
+        for(int i = 0 ; i < selected.size() ; i++){
+            cout << selected[i] << " ";
         }
         cout << "\n";
-        return;
     }
-    for(int i = 1 ; i <= k ; i++){
-        if(!check[i]){
-            check[i] = true;
-            lotto(cnt + 1);
-            check[i] = false;
-        }
+    for(int i = startIdx + 1 ; i < N ; i++){
+        selected.push_back(lotto[i]);
+        SELECT(i);
+        selected.pop_back();
     }
 }
 
 int main(){
     while(1){
-        cin >> k;
-        for(int i = 1 ; i <= k ; i++){
-            cin >> num[i];
-            check[i] = false;
+        cin >> N;
+        if(N == 0){
+            return 0;
         }
-        for(int i = 1 ; i <= k-5 ; i++){
-            check[i] = true;
-            lotto(1);
+        for(int i = 0 ; i < N ; i++){
+            int a;
+            cin >> a;
+            lotto.push_back(a);
         }
+        for(int i = 0 ; i < N ; i++){
+            selected.push_back(lotto[i]);
+            SELECT(i);
+            selected.pop_back();
+        }
+        cout << "\n";
+        lotto.clear();
+        selected.clear();
     }
-    return 0;
 }
