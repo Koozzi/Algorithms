@@ -1,13 +1,8 @@
 #include <iostream>
-#include <vector>
 #include <algorithm>
-#include <queue>
-#include <memory.h>
 #include <deque>
 
 using namespace std;
-
-
 
 bool isBiggest(deque<pair<int, int>> d){
     bool check = true;
