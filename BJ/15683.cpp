@@ -1,156 +1,234 @@
 #include <iostream>
 #include <vector>
-#include <algorithm>
+#include <stdio.h>
 
 using namespace std;
 
-// vector<pair<pair<int, int>, pair<int, int>>> cctv;
-int M, N;
+int M, N, ans = 65;
 int map[8][8];
+int cmap[8][8];
 
-typedef struct{
-    int locI, locJ;
-    int cctvNum;
-    int N, E, S, W;
-}CCTV;
-CCTV cctvInfo[8];
+vector<pair<pair<int, int>, pair<int, int>>> v;
+vector<pair<int, int>> cctv;
 
-void make(int startI, int startJ, int dir){
-    if(dir == 1){
-        for(int i = startI - 1 ; i >= 0 ; i--){ // N
-            if(map[i][startJ] == 6){
-                break;
-            }
-            if(map[i][startJ] == 0){
-                map[i][startJ] = -1;
-            }
+void show(){
+    for(int i = 0 ; i < M ; i++){
+        for(int j = 0 ; j < N ; j++){
+            cout << cmap[i][j] << " ";
         }
+        cout << "\n";
+    }
+}
+
+void copyMap(){
+    for(int i = 0 ; i < M ; i++){
+        for(int j = 0 ; j < N ; j++){
+            cmap[i][j] = map[i][j];
+        }
+    }
+}
+
+void up(int startI, int startJ){
+    for(int i = startI - 1 ; i >= 0 ; i--){
+        if(cmap[i][startJ] == 6){
+            return;
+        }
+        if(cmap[i][startJ] == 0){
+            cmap[i][startJ] = 9;
+        }
+    }
+}
+
+void down(int startI, int startJ){
+    for(int i = startI + 1 ; i < M ; i++){
+        if(cmap[i][startJ] == 6){
+            return;
+        }
+        if(cmap[i][startJ] == 0){
+            cmap[i][startJ] = 9;
+        }
+    }
+}
+
+void right(int startI, int startJ){
+    for(int i = startJ + 1 ; i < N ; i++){
+        if(cmap[startI][i] == 6){
+            return;
+        }
+        if(cmap[startI][i] == 0){
+            cmap[startI][i] = 9;
+        }
+    }
+}
+
+void left(int startI, int startJ){
+    for(int i = startJ - 1 ; i >= 0 ; i--){
+        if(cmap[startI][i] == 6){
+            return;
+        }
+        if(cmap[startI][i] == 0){
+            cmap[startI][i] = 9;
+        }
+    }
+}
+
+void One(int num, int dir){
+    if(dir == 0){
+        right(v[num].first.first, v[num].first.second);
+    }
+    else if(dir == 1){
+        down(v[num].first.first, v[num].first.second);
     }
     else if(dir == 2){
-        for(int i = startJ + 1 ; i < N ; i++){ // E
-            if(map[startI][i] == 6){
-                break;
-            }
-            if(map[startI][i] == 0){
-                map[startI][i] = -1;
-            }
-        }
-    }
-    else if(dir == 3){
-        for(int i = startI + 1 ; i < M ; i++){ // S
-            if(map[i][startJ] == 6){
-                break;
-            }
-            if(map[i][startJ] == 0){
-                map[i][startJ] = -1;
-            }
-        }
+        left(v[num].first.first, v[num].first.second);
     }
     else{
-        for(int i = startJ -1 ; i >= N ; i--){ // W
-            if(map[startI][i] == 6){
-                break;
+        up(v[num].first.first, v[num].first.second);
+    }
+}
+
+void Two(int num, int dir){
+    if(dir == 0){
+        right(v[num].first.first, v[num].first.second);
+        left(v[num].first.first, v[num].first.second);
+    }
+    else if(dir == 1){
+        down(v[num].first.first, v[num].first.second);
+        up(v[num].first.first, v[num].first.second);
+    }
+    else if(dir == 2){
+        right(v[num].first.first, v[num].first.second);
+        left(v[num].first.first, v[num].first.second);
+    }
+    else{
+        up(v[num].first.first, v[num].first.second);
+        down(v[num].first.first, v[num].first.second);
+    }
+}
+void Three(int num, int dir){
+    if(dir == 0){
+        right(v[num].first.first, v[num].first.second);
+        down(v[num].first.first, v[num].first.second);
+    }
+    else if(dir == 1){
+        down(v[num].first.first, v[num].first.second);
+        left(v[num].first.first, v[num].first.second);
+    }
+    else if(dir == 2){
+        up(v[num].first.first, v[num].first.second);
+        left(v[num].first.first, v[num].first.second);
+    }
+    else{
+        up(v[num].first.first, v[num].first.second);
+        right(v[num].first.first, v[num].first.second);
+    }
+}
+void Four(int num, int dir){
+    if(dir == 0){
+        up(v[num].first.first, v[num].first.second);
+        right(v[num].first.first, v[num].first.second);
+        down(v[num].first.first, v[num].first.second);
+    }
+    else if(dir == 1){
+        right(v[num].first.first, v[num].first.second);
+        down(v[num].first.first, v[num].first.second);
+        left(v[num].first.first, v[num].first.second);
+    }
+    else if(dir == 2){
+        down(v[num].first.first, v[num].first.second);
+        up(v[num].first.first, v[num].first.second);
+        left(v[num].first.first, v[num].first.second);
+    }
+    else{
+        left(v[num].first.first, v[num].first.second);
+        up(v[num].first.first, v[num].first.second);
+        right(v[num].first.first, v[num].first.second);
+    }
+}
+void Five(int num, int dir){
+        left(v[num].first.first, v[num].first.second);
+        up(v[num].first.first, v[num].first.second);
+        right(v[num].first.first, v[num].first.second);
+        down(v[num].first.first, v[num].first.second);
+}
+
+void camera(int num){
+    if(cctv[num].first == 1){
+        One(num, cctv[num].second);
+    }
+    else if(cctv[num].first == 2){
+        Two(num, cctv[num].second);
+    }
+    else if(cctv[num].first == 3){
+        Three(num, cctv[num].second);
+    }
+    else if(cctv[num].first == 4){
+        Four(num, cctv[num].second);
+    }
+    else{
+        Five(num, cctv[num].second);
+    }
+}
+
+void watch(int cnt){
+    if(cctv.size() == v.size()){
+        copyMap();
+        for(int i = 0 ; i < cctv.size() ; i++){
+            camera(i);
+        }
+        int zeroCount = 0;
+        for(int i = 0 ; i < M ; i++){
+            for(int j = 0 ; j < N ; j++){
+                if(cmap[i][j] == 0){
+                    zeroCount++;
+                }
             }
-            if(map[startI][i] == 0){
-                map[startI][i] = -1;
-            }
+        }
+        if(zeroCount == 2){
+            show();
+            cout << "\n";
+        }
+        // show();
+        // cout << zeroCount << "\n";
+        // cout << "\n";
+        ans = min(ans, zeroCount);
+        return;
+    }
+    else{
+        cnt++;
+        for(int i = 0 ; i < 4 ; i++){
+            cctv.push_back(make_pair(map[v[cnt].first.first][v[cnt].first.second], i));
+            watch(cnt);
+            cctv.pop_back();
         }
     }
 }
 
 int main(){
-    int cctvCount = 0;
     cin >> M >> N;
     for(int i = 0 ; i < M ; i++){
         for(int j = 0 ; j < N ; j++){
             cin >> map[i][j];
-        }
-    }
-    for(int i = 0 ; i < M ; i++){
-        for(int j = 0 ; j < N ; j++){
             if(map[i][j] != 0 && map[i][j] != 6){
-                int A = 0;
-                cctvInfo[cctvCount].locI = i;
-                cctvInfo[cctvCount].locJ = j;
-                cctvInfo[cctvCount].cctvNum = map[i][j];
-                for(int cctvI = i - 1; cctvI >= 0 ; cctvI--){
-                    if(map[cctvI][j] == 6){
-                        break;
-                    }
-                    A++;
-                }
-                cctvInfo[cctvCount].N = A;
-                A = 0;
-                for(int cctvJ = j + 1; cctvJ < N ; cctvJ++){
-                    if(map[i][cctvJ] == 6){
-                        break;
-                    }
-                    A++;
-                }
-                cctvInfo[cctvCount].E = A;
-                A = 0;
-                for(int cctvI = i + 1; cctvI < M ; cctvI++){
-                    if(map[cctvI][j] == 6){
-                        break;
-                    }
-                    A++;
-                }
-                cctvInfo[cctvCount].S = A;
-                A = 0;
-                for(int cctvJ = j - 1; cctvJ >= 0 ; cctvJ--){
-                    if(map[i][cctvJ] == 6){
-                        break;
-                    }
-                    A++;
-                }
-                cctvInfo[cctvCount].W = A;
-                cctvCount++;
+                v.push_back(make_pair(make_pair(i,j), make_pair(map[i][j], 0)));
             }
         }
     }
-    for(int i = 0 ; i < cctvCount ; i++){
-        if(cctvInfo[i].cctvNum == 1){
-            int direction = 0;
-            int maxCount = 0;
-            if(cctvInfo[i].N >= maxCount){
-                maxCount = cctvInfo[i].N;
-                direction = 1;
+    if(v.size() == 0){
+        int otherAns = 0;
+        for(int i = 0 ; i < M ; i++){
+            for(int j = 0 ; j < N ; j++){
+                if(map[i][j] == 0){
+                    otherAns++;
+                }
             }
-            else if(cctvInfo[i].E >= maxCount){
-                maxCount = cctvInfo[i].E;
-                direction = 2;
-            }            
-            else if(cctvInfo[i].S >= maxCount){
-                maxCount = cctvInfo[i].S;
-                direction = 3;
-            }            
-            else if(cctvInfo[i].W >= maxCount){
-                maxCount = cctvInfo[i].W;
-                direction = 4;
-            }
-            make(cctvInfo[i].locI, cctvInfo[i].locJ, direction);
         }
-        else if(cctvInfo[i].cctvNum == 2){
-
-        }
-        else if(cctvInfo[i].cctvNum == 3){
-
-        }
-        else if(cctvInfo[i].cctvNum == 4){
-
-        }
-        else{
-
-        }
+        cout << otherAns << "\n";
     }
-    for(int i = 0 ; i < cctvCount ; i++){
-        cout << "location : " << cctvInfo[i].locI << "," << cctvInfo[i].locJ << "\n";
-        cout << "N : " << cctvInfo[i].N << "\n";
-        cout << "E : " << cctvInfo[i].E << "\n";
-        cout << "S : " << cctvInfo[i].S << "\n";
-        cout << "W : " << cctvInfo[i].W << "\n";
+    else{
+        watch(-1);
+        cout << ans << "\n";
     }
+
+    return 0;
 }
-
-
-
