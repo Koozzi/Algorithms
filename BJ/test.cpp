@@ -7,25 +7,73 @@
 
 using namespace std;
 
-int main(){
-    int I = 10 , J = 10;
-    int currentI = 3, currentJ = 7;
-    int nextI, nextJ;
-    int map[20][20];
-    for(int i = 0 ; i < 10 ; i++){
-        nextI = I - (J - currentJ);
-        nextJ = J + (I - currentI);
-        currentI = nextI;
-        currentJ = nextJ;
-        memset(map, 0 , sizeof(map));
-        map[currentI][currentJ] = 1;
-        for(int i = 0 ; i < 20 ; i++){
-            for(int j = 0 ; j < 20 ; j++){
-                cout << map[i][j];
-            }
-            cout << "\n";
-        }
-        cout << "\n";
+int M, N, locI, locJ, Dir;
+int currentI, currentJ, currentDir, nextI, nextJ, nextDir;
+int map[50][50];
+
+void ready(int startI, int startJ, int startDir){
+    if(startDir == 0){
+        nextI = startI;
+        nextJ = startJ - 1;
     }
-    return 0;
+    else if(startDir == 1){
+        nextI = startI - 1;
+        nextJ = startJ;
+    }
+    else if(startDir == 2){
+        nextI = startI;
+        nextJ = startJ + 1;
+    }
+    else{
+        nextI = startI + 1;
+        nextJ = startJ;
+    }
+}
+
+void changeDir(int startDir){
+    if(startDir == 0){
+        nextDir = 3;
+    }
+    else if(startDir == 1){
+        nextDir = 0;
+    }
+    else if(startDir == 2){
+        nextDir = 1;
+    }
+    else{
+        nextDir = 2;
+    }
+}
+
+void letsClean(int startI, int startJ, int startDir){
+    queue<pair<pair<int, int>, pair<int, int>>> q;
+    q.push({{startI, startJ},{startDir, 0}});
+    map[startI][startJ] = 2;
+    while(!q.empty()){
+        currentI = q.front().first.first;
+        currentJ = q.front().first.second;
+        currentDir = q.front().second.first;
+        q.pop();
+        ready(currentI, currentJ, currentDir);
+        if(map[nextI][nextJ] == 0){
+            changeDir(currentDir);
+            q.push({{nextI, nextJ},{nextDir, 0}});
+            map[nextI][nextJ] = 2; 
+        }
+        else if(map[nextI][nextJ] == 2){
+            changeDir(currentDir);
+            q.push({{currentI, currentJ},{nextDir, 0}});
+        }
+        else if()
+    }
+}
+
+int main(){
+    cin >> M >> N >> locI >> locJ >> Dir;
+    for(int i = 0 ; i < M ; i++){
+        for(int j = 0 ; j < N ; j++){
+            cin >> map[i][j];
+        }
+    }
+    letsClean(locI, locJ, Dir);
 }
