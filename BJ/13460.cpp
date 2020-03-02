@@ -5,7 +5,7 @@
 using namespace std;
 
 int M, N, ans = 11;
-int redI, redJ, blueI, blueJ, holeI, holeJ;
+int redi, redj, bluei, bluej, holei, holej;
 char map[11][11];
 char cmap[11][11];
 
@@ -24,20 +24,25 @@ void copyMap(){
     for(int i = 0 ; i < M ; i++){
         for(int j = 0 ; j < N ; j++){
             cmap[i][j] = map[i][j];
+            if(cmap[i][j] == 'R'){
+                redi = i;
+                redj = j;
+            }
+            else if(cmap[i][j] == 'B'){
+                bluei = i;
+                bluej = j;
+            }
+            else if(cmap[i][j] == 'O'){
+                holei = i;
+                holej = j;
+            }
         }
-    }
-}
-
-void rotate(int dir){
-    if(dir == 1){
-
     }
 }
 
 void solve(int cnt){
     if(cnt == 10){
         copyMap();
-        
         return;
     }
     else{
