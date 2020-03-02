@@ -7,13 +7,25 @@
 
 using namespace std;
 
-int a = 5, b = 5;
-
 int main(){
-    int A = 3, B = 3;
-    deque<int> dq;
-    dq.push_back(1);
-    int a = dq[0];
-    cout << dq[0] << "\n";
+    int I = 10 , J = 10;
+    int currentI = 3, currentJ = 7;
+    int nextI, nextJ;
+    int map[20][20];
+    for(int i = 0 ; i < 10 ; i++){
+        nextI = I - (J - currentJ);
+        nextJ = J + (I - currentI);
+        currentI = nextI;
+        currentJ = nextJ;
+        memset(map, 0 , sizeof(map));
+        map[currentI][currentJ] = 1;
+        for(int i = 0 ; i < 20 ; i++){
+            for(int j = 0 ; j < 20 ; j++){
+                cout << map[i][j];
+            }
+            cout << "\n";
+        }
+        cout << "\n";
+    }
     return 0;
 }

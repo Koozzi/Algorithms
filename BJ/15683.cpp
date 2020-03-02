@@ -184,10 +184,10 @@ void watch(int cnt){
                 }
             }
         }
-        if(zeroCount == 2){
-            show();
-            cout << "\n";
-        }
+        // if(zeroCount == 2){
+        //     show();
+        //     cout << "\n";
+        // }
         // show();
         // cout << zeroCount << "\n";
         // cout << "\n";
