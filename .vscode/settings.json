@@ -12,6 +12,7 @@
         "string": "cpp",
         "string_view": "cpp",
         "iosfwd": "cpp",
-        "iterator": "cpp"
+        "iterator": "cpp",
+        "memory": "cpp"
     }
 }
