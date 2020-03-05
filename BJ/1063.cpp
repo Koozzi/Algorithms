@@ -1,98 +1,157 @@
 #include <iostream>
 #include <vector>
-#include <queue>
-#include <memory.h>
 
 using namespace std;
 
-int M, N;
-
-int map[100][100];
-
-bool visited[100][100];
-
-typedef struct{
-    int moveI, moveJ;
-}Dir;
-Dir moveDir[4] = {{0,1}, {0,-1}, {1,0}, {-1,0}};
+int map[8][8];
+int M;
+int kingI, kingJ, rockI, rockJ;
+int kingNextI, kingNextJ, rockNextI, rockNextJ;
+char King[3];
+char Rock[3];
+char Order[51][3];
 
 void show(){
-    cout<<"\n";
-    for(int i = 0 ; i < M ; i++){
-        for(int j = 0 ; j < N ; j++){
+    cout << "\n";
+    for(int i = 0 ; i < 8 ; i++){
+        for(int j = 0 ; j < 8 ; j++){
             cout << map[i][j] << " ";
         }cout << "\n";
     }
 }
-
-void BFS(){
-    memset(visited, false, sizeof(visited));
-    queue<pair<int, int>> q;
-    q.push(make_pair(0,0));
-    visited[0][0] = true;
-    map[0][0] = 8;
-    while(!q.empty()){
-        int currentI = q.front().first;
-        int currentJ = q.front().second;
-        q.pop();
-        for(int i = 0 ; i < 4 ; i++){
-            int nextI = currentI + moveDir[i].moveI;
-            int nextJ = currentJ + moveDir[i].moveJ;
-            if(nextI >= 0 && nextI < M && nextJ >= 0 && nextJ < N){
-                if(!visited[nextI][nextJ] && (map[nextI][nextJ] == 0 || map[nextI][nextJ] == 8)){
-                    q.push(make_pair(nextI, nextJ));
-                    visited[nextI][nextJ] = true;
-                    map[nextI][nextJ] = 8;
-                }
-            }
+void moveKing(int idx){
+    if(Order[idx][0] == 'L'){
+        if(Order[idx][1] == '\0'){
+            //L
+            kingNextJ = kingJ - 1;
+            kingNextI = kingI;
         }
+        else if(Order[idx][1] == 'T'){
+            //LT
+            kingNextI = kingI + 1;
+            kingNextJ = kingJ - 1;
+        }
+        else if(Order[idx][1] == 'B'){
+            //LB
+            kingNextI = kingI - 1;
+            kingNextJ = kingJ - 1;
+        }
+    }
+    else if(Order[idx][0] == 'R'){
+        if(Order[idx][1] == '\0'){
+            //R
+            kingNextI = kingI;
+            kingNextJ = kingJ + 1;
+        }
+        else if(Order[idx][1] == 'T'){
+            //RT
+            kingNextI = kingI + 1;
+            kingNextJ = kingJ + 1;
+        }
+        else if(Order[idx][1] == 'B'){
+            //RB
+            kingNextI = kingI - 1;
+            kingNextJ = kingJ + 1;
+        }
+    }
+    else if(Order[idx][0] == 'B'){
+        //B
+        kingNextI = kingI - 1;
+        kingNextJ = kingJ;
+    }
+    else if(Order[idx][0] == 'T'){
+        //T
+        kingNextI = kingI + 1;
+        kingNextJ = kingJ;
+    }
+}
+void moveRock(int idx){
+    if(Order[idx][0] == 'L'){
+        if(Order[idx][1] == '\0'){
+            //L
+            rockNextI = rockI;
+            rockNextJ = rockJ - 1;
+        }
+        else if(Order[idx][1] == 'T'){
+            //LT
+            rockNextI = rockI + 1;
+            rockNextJ = rockJ - 1;
+        }
+        else if(Order[idx][1] == 'B'){
+            //LB
+            rockNextI = rockI - 1;
+            rockNextJ = rockJ - 1;
+        }
+    }
+    else if(Order[idx][0] == 'R'){
+        if(Order[idx][1] == '\0'){
+            //R
+            rockNextI = rockI;
+            rockNextJ = rockJ + 1;
+        }
+        else if(Order[idx][1] == 'T'){
+            //RT
+            rockNextI = rockI + 1;
+            rockNextJ = rockJ + 1;
+        }
+        else if(Order[idx][1] == 'B'){
+            //RB
+            rockNextI = rockI - 1;
+            rockNextJ = rockJ + 1;
+        }
+    }
+    else if(Order[idx][0] == 'B'){
+        //B
+        rockNextI = rockI - 1;
+        rockNextJ = rockJ;
+    }
+    else if(Order[idx][0] == 'T'){
+        //T
+        rockNextI = rockI + 1;
+        rockNextJ = rockJ;
     }
 }
 
-void deleteBoundary(){
-    vector<pair<int, int>> v;
-    for(int i = 1 ; i < M-1 ; i++){
-        for(int j = 1 ; j < N-1 ; j++){
-            if(map[i-1][j] == 8 || map[i+1][j] == 8 || map[i][j-1] == 8 || map[i][j+1] == 8){
-                v.push_back(make_pair(i,j));
-            }
-        }
-    }
-    for(int i = 0 ; i < v.size() ; i++){
-        map[v[i].first][v[i].second] = 8;
-    }
-}
-
-int getSize(){
-    int sum = 0;
-    for(int i = 0 ; i < M ; i++){
-        for(int j = 0 ; j < N ; j++){
-            if(map[i][j] == 1){
-                sum++;
-            }
-        }
-    }
-    return sum;
+void intLocation(){
+    kingI = King[1] - 48;
+    kingJ = King[0] - 64;
+    rockI = Rock[1] - 48;
+    rockJ = Rock[0] - 64; 
 }
 
 int main(){
-    cin >> M >> N;
+    cin >> King >> Rock >> M;
     for(int i = 0 ; i < M ; i++){
-        for(int j = 0 ; j < N ; j++){
-            cin >> map[i][j];
-        }
+        cin >> Order[i];
     }
-    int ans, cnt = 0;
-    while(1){
-        BFS();
-        ans = getSize();
-        deleteBoundary();
-
-        cnt++;
-        if(getSize() == 0){
-            cout << cnt << "\n";
-            cout << ans << "\n";
-            return 0;
+    intLocation();
+    for(int i = 0 ; i < M ; i++){
+        // printf("King : (%d, %d)\n", kingJ, kingI);
+        // printf("Rock : (%d, %d)\n", rockJ, rockI);
+        moveKing(i);
+        // printf("king next move : (%d, %d)\n", kingNextJ, kingNextI);
+        if(kingNextI >= 1 && kingNextI <= 8 && kingNextJ >= 1 && kingNextJ <= 8){
+            if(kingNextI == rockI && kingNextJ == rockJ){
+                moveRock(i);
+                // printf("rock next move : (%d, %d)\n", rockNextJ, rockNextI);
+                if(rockNextI >= 1 && rockNextI <= 8 && rockNextJ >= 1 && rockNextJ <= 8){
+                    rockI = rockNextI;
+                    rockJ = rockNextJ;
+                    kingI = kingNextI;
+                    kingJ = kingNextJ;
+                }
+            }
+            else{
+                kingI = kingNextI;
+                kingJ = kingNextJ;
+            }
         }
+        // printf("King : (%d, %d)\n", kingJ, kingI);
+        // printf("Rock : (%d, %d)\n", rockJ, rockI);
     }
+    char finalK = kingJ + 64;
+    char finalR = rockJ + 64;
+    cout << finalK << kingI << "\n";
+    cout << finalR << rockI << "\n";
+    return 0;
 }

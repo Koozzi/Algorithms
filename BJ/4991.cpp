@@ -16,6 +16,7 @@ int Distance[11][11];
 vector<pair<pair<int, int>, int>> nodeInfo;
 vector<pair<pair<int, int>, int>> dist;
 vector<int> v;
+
 typedef struct{
     int moveI, moveJ;
 }Dir;
