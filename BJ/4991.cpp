@@ -60,7 +60,6 @@ void getDistance(){
             else{
                 Distance[startNode][endNode] = DD;
             }
-            
         }
     }
 }
