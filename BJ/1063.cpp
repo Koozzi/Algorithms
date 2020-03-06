@@ -126,14 +126,10 @@ int main(){
     }
     intLocation();
     for(int i = 0 ; i < M ; i++){
-        // printf("King : (%d, %d)\n", kingJ, kingI);
-        // printf("Rock : (%d, %d)\n", rockJ, rockI);
         moveKing(i);
-        // printf("king next move : (%d, %d)\n", kingNextJ, kingNextI);
         if(kingNextI >= 1 && kingNextI <= 8 && kingNextJ >= 1 && kingNextJ <= 8){
             if(kingNextI == rockI && kingNextJ == rockJ){
                 moveRock(i);
-                // printf("rock next move : (%d, %d)\n", rockNextJ, rockNextI);
                 if(rockNextI >= 1 && rockNextI <= 8 && rockNextJ >= 1 && rockNextJ <= 8){
                     rockI = rockNextI;
                     rockJ = rockNextJ;
@@ -146,8 +142,6 @@ int main(){
                 kingJ = kingNextJ;
             }
         }
-        // printf("King : (%d, %d)\n", kingJ, kingI);
-        // printf("Rock : (%d, %d)\n", rockJ, rockI);
     }
     char finalK = kingJ + 64;
     char finalR = rockJ + 64;
