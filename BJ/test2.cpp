@@ -4,7 +4,7 @@ using namespace std;
 
 int M, N, H, CNT;
 int appendCnt = 0;
-int ans = 4;
+int ans;
 bool check;
 int map[31][11];
 
@@ -59,7 +59,7 @@ bool CHECK(){
 }
 
 void ladder(){
-    if(appendCnt < 4){
+    if(appendCnt == 1){
         if(CHECK()){
             check = true;
             ans = appendCnt;
@@ -67,36 +67,24 @@ void ladder(){
         }
     }
     else{
-        for(int i = 1 ; i <= M ; i++){
-            for(int j = 1 ; j < N ;){
-                if(map[i][j] == 0){
-                    if(map[i][j+1] == 0){
-                        map[i][j] = 1;
-                        appendCnt++;
-                        if(CHECK()){
-                            ans = appendCnt;
-                            check = true;
-                            return;
-                        }
-                        ladder();
-                        map[i][j] = 0;
-                        appendCnt--;
-                        j++;
+    for(int i = 1 ; i <= M ; i++){
+        for(int j = 1 ; j < N ; j++){
+            if(map[i][j] == 0){
+                if(map[i][j+1] == 0){
+                    map[i][j] = 1;
+                    appendCnt++;
+                    if(CHECK()){
+                        ans = appendCnt;
+                        check = true;
+                        return;
                     }
-                    else{
-                        j+=3;
-                    }
-                }
-                else{
-                    if(map[i][j] == 1){
-                        j+=2;
-                    }
-                    else{
-                        j++;
-                    }
+                    ladder();
+                    map[i][j] = 0;
+                    appendCnt--;
                 }
             }
         }
+    }
     }
 }
 int main(){
@@ -112,7 +100,7 @@ int main(){
     }
     for(CNT = 1 ; CNT <= 3 ; CNT++){
         for(int i = 1 ; i <= M ; i++){
-            for(int j = 1 ; j < N ;){
+            for(int j = 1 ; j < N ; j++){
                 if(map[i][j] == 0){
                     if(map[i][j+1] == 0){
                         map[i][j] = 1;
@@ -124,24 +112,12 @@ int main(){
                         ladder();
                         map[i][j] = 0;
                         appendCnt--;
-                        j++;
-                    }
-                    else{
-                        j+=3;
-                    }
-                }
-                else{
-                    if(map[i][j] == 1){
-                        j+=2;
-                    }  
-                    else{
-                        j++;
                     }
                 }
             }
         }
     }
-    if(ans == 4){
+    if(!check){
         cout << -1 << "\n";
     }
     else{
