@@ -94,16 +94,5 @@ int main(){
     }
     treeCount();
     cout << ans << endl;
-
-    // for(int i = 1 ; i <= mapSize ; i++){
-    //     for(int j = 1 ; j <= mapSize ; j++){
-    //         if(treeInfo[i][j].size() != 0){
-    //             for(int t = 0 ; t < treeInfo[i][j].size() ; t++){
-    //                 printf("(%d, %d) %d    양분 : %d\n", i, j, treeInfo[i][j][t], map[i][j]);
-    //             }
-    //         }
-    //     }
-    // }
-
     return 0;
 }

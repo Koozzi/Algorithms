@@ -111,7 +111,6 @@ int main(){
     }
     while(isThereAnyFish()){
         BFS();
-        // printf("(%d, %d)\n", sharkI, sharkJ);
         if(Tlqkf == 0){
             cout << ans << endl;
             return 0;
