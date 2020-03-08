@@ -51,10 +51,7 @@ void CHECK(){
             return;
         }
     }
-    // cout << appendCnt << endl;
     ans = min(ans, appendCnt);
-    // exit(0);
-    // return;
 }
 void ladder(){
     for(int i = 1 ; i <= M ; i++){
@@ -94,10 +91,6 @@ int main(){
         map[a][b] = 1;
     }
     CHECK();
-    if(ans == 0){
-        cout << 0 << "\n";
-        return 0;
-    }
     for(int i = 1 ; i <= M ; i++){
         for(int j = 1 ; j < N ;){
             if(map[i][j] == 0){

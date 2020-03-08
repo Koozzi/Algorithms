@@ -1,151 +1,21 @@
 #include <iostream>
 #include <vector>
+
 using namespace std;
 
-int M, N, H, CNT;
-int appendCnt = 0;
-int ans = 4;
-bool check;
-int map[31][11];
+vector<int> v;
 
-void show(){
-    cout << endl;
-    for(int i = 1 ; i <= M ; i++){
-        for(int j = 1 ; j <= N ; j++){
-            cout << map[i][j] << " ";
-        }cout << endl;
-    }
-}
-bool move(int start){
-    int I = 1;
-    int J = start;
-    while(1){
-        if(map[I][J] == 1){
-            I++;
-            J++;
-        }
-        else if(map[I][J] == 0){
-            if(map[I][J-1] == 1){
-                I++;
-                J--;
-            }
-            else{
-                I++;
-            }
-        }
-        if(I == M+1){
-            if(J == start){
-                return true;
-            }
-            else{
-                return false;
-            }
-        }
-    }
-}
-bool CHECK(){
-    int cnt = 0;
-    for(int i = 1 ; i <= N ; i++){
-        if(move(i)){
-            cnt++;
-        }
-    }
-    if(cnt == N){
-        return true;
-    }
-    else{
-        return false;
-    }
-}
-
-void ladder(){
-    if(appendCnt < 4){
-        if(CHECK()){
-            check = true;
-            ans = appendCnt;
-            return;
-        }
-    }
-    else{
-        for(int i = 1 ; i <= M ; i++){
-            for(int j = 1 ; j < N ;){
-                if(map[i][j] == 0){
-                    if(map[i][j+1] == 0){
-                        map[i][j] = 1;
-                        appendCnt++;
-                        if(CHECK()){
-                            ans = appendCnt;
-                            check = true;
-                            return;
-                        }
-                        ladder();
-                        map[i][j] = 0;
-                        appendCnt--;
-                        j++;
-                    }
-                    else{
-                        j+=3;
-                    }
-                }
-                else{
-                    if(map[i][j] == 1){
-                        j+=2;
-                    }
-                    else{
-                        j++;
-                    }
-                }
-            }
-        }
-    }
-}
 int main(){
-    cin >> N >> H >> M;
-    for(int i = 0 ; i < H ; i++){
-        int a, b;
-        cin >> a >> b;
-        map[a][b] = 1;
+    for(int i = 0 ; i < 10 ; i++){
+        v.push_back(i);
     }
-    if(CHECK()){
-        cout << 0 << "\n";
-        return 0;
+    for(int i = 0 ; i < 10 ; i++){
+        cout << v[i] << " ";
+    }cout << "\n";
+    for(int i = 4 ; i < 10 ; i++){
+        v.erase(v.begin() + 4);
     }
-    for(CNT = 1 ; CNT <= 3 ; CNT++){
-        for(int i = 1 ; i <= M ; i++){
-            for(int j = 1 ; j < N ;){
-                if(map[i][j] == 0){
-                    if(map[i][j+1] == 0){
-                        map[i][j] = 1;
-                        appendCnt++;
-                        if(CHECK()){
-                            cout << appendCnt << endl;
-                            return 0;
-                        }
-                        ladder();
-                        map[i][j] = 0;
-                        appendCnt--;
-                        j++;
-                    }
-                    else{
-                        j+=3;
-                    }
-                }
-                else{
-                    if(map[i][j] == 1){
-                        j+=2;
-                    }  
-                    else{
-                        j++;
-                    }
-                }
-            }
-        }
-    }
-    if(ans == 4){
-        cout << -1 << "\n";
-    }
-    else{
-        cout << ans << endl;
-    }
-    return 0;
+    for(int i = 0 ; i < 10 ; i++){
+        cout << v[i] << " ";
+    }cout << "\n";
 }
