@@ -13,6 +13,7 @@
         "string_view": "cpp",
         "iosfwd": "cpp",
         "iterator": "cpp",
-        "memory": "cpp"
+        "memory": "cpp",
+        "ostream": "cpp"
     }
 }

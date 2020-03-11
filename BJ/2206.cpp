@@ -1,87 +1,76 @@
 #include <iostream>
-#include <vector>
-#include <algorithm>
-#include <queue>
-#include <memory.h>
+#include <deque>
 
 using namespace std;
 
-int M, N, ans;
+int M, N;
+char inputData[1001][1001];
 int map[1000][1000];
-int depth[1000][1000];
-bool visited[1000][1000];
-
-vector<pair<int, int>> wall;
+bool visitied[1000][1000][2];
 
 typedef struct{
     int moveI, moveJ;
 }Dir;
 Dir moveDir[4] = {{0,1}, {0,-1}, {1,0}, {-1,0}};
 
-void show(){
-    cout << "\n";
-    for(int i = 0 ; i < M ; i++){
-        for(int j = 0 ; j < N ; j++){
-            cout << map[i][j] << " ";
+void BFS(){
+    deque<pair<pair<int, int>, pair<int, int>>> dq;
+    dq.push_back(make_pair(make_pair(0,0), make_pair(0,1)));
+    visitied[0][0][0] = true;
+    while(!dq.empty()){
+        int currentI = dq.front().first.first;
+        int currentJ = dq.front().first.second;
+        int currentB = dq.front().second.first;
+        int currentD = dq.front().second.second;
+        dq.pop_front();
+        if(currentI == M-1 && currentJ == N-1){
+            cout << currentD << endl;
+            return;
         }
-        cout << "\n";
-    }
-}
-
-int BFS(){
-    queue<pair<int, int>> q;
-    q.push(make_pair(0,0));
-    visited[0][0] = true;
-    while(!q.empty()){
-        int currentI = q.front().first;
-        int currentJ = q.front().second;
-        q.pop();
         for(int i = 0 ; i < 4 ; i++){
             int nextI = currentI + moveDir[i].moveI;
             int nextJ = currentJ + moveDir[i].moveJ;
             if(nextI >= 0 && nextI < M && nextJ >= 0 && nextJ < N){
-                if(!visited[nextI][nextJ] && map[nextI][nextJ] == 0){
-                    q.push(make_pair(nextI, nextJ));
-                    visited[nextI][nextJ] = true;
-                    depth[nextI][nextJ] = depth[currentI][currentJ] + 1;
+                if(map[nextI][nextJ] == 1 && currentB == 0){
+                    dq.push_back(make_pair(make_pair(nextI, nextJ), make_pair(currentB + 1, currentD + 1)));
+                    visitied[nextI][nextJ][currentB + 1] = true;
+                }
+                else if(map[nextI][nextJ] == 0 && !visitied[nextI][nextJ][currentB]){
+                    dq.push_back(make_pair(make_pair(nextI, nextJ), make_pair(currentB, currentD + 1)));
+                    visitied[nextI][nextJ][currentB] = true;
                 }
             }
         }
     }
-    if(visited[M-1][N-1]){
-        return depth[M-1][N-1] + 1;
-    }
-    else{
-        return 9999;
-    }
+    cout << -1 << endl;
 }
 
 int main(){
     cin >> M >> N;
-    char inputData[1000][1000];
     for(int i = 0 ; i < M ; i++){
         cin >> inputData[i];
         for(int j = 0 ; j < N ; j++){
-            map[i][j] = int(inputData[i][j] - '0');
-            if(map[i][j] == 1){
-                wall.push_back(make_pair(i,j));
-            }
+            map[i][j] = int(inputData[i][j] - 48);
         }
     }
-
-    ans = BFS();
-    for(int i = 0 ; i < wall.size() ; i++){    
-        memset(visited, false, sizeof(visited));
-        memset(depth, 0, sizeof(depth));
-        map[wall[i].first][wall[i].second] = 0;
-        ans = min(ans, BFS());
-        map[wall[i].first][wall[i].second] = 1;
-    }
-    if(ans == 9999){
-        cout << -1 << "\n";
-    }else{
-        cout << ans << "\n";
-    }
-    
+    BFS();
     return 0;
 }
+
+/*
+6 4
+0100
+1110
+1000
+0000
+0111
+0000
+Answer : 15
+
+4 4
+0111
+1111
+1111
+1110
+Answer : -1
+*/
