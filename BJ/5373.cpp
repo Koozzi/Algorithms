@@ -3,7 +3,7 @@
 
 using namespace std;
 
-char order[1000][3];
+char order[1001][3];
 
 char StartCube[6][3][3] = {
     {{'w', 'w', 'w'}, {'w', 'w', 'w'}, {'w', 'w', 'w'}},
@@ -54,7 +54,7 @@ void copyCube(){
     }
 }
 void rotatePlane(int plane, char dir){
-    copyCube();
+    // copyCube();
         if(dir == '+'){
             for(int i = 0 ; i < 3 ; i++){
                 OriginalCube[plane][i][0] = CopiedCube[plane][2][i];
@@ -73,7 +73,7 @@ void rotatePlane(int plane, char dir){
         }
 }
 void rotateU(char dir){
-    copyCube();
+    // copyCube();
     if(dir == '+'){
         for(int i = 0 ; i < 3 ; i++){
             OriginalCube[5][0][i] = CopiedCube[4][0][i]; // 뒤 -> 오
@@ -93,7 +93,7 @@ void rotateU(char dir){
     rotatePlane(0, dir);
 }
 void rotateD(char dir){
-    copyCube();
+    // copyCube();
     if(dir == '-'){
         for(int i = 0 ; i < 3 ; i++){
             OriginalCube[5][2][i] = CopiedCube[4][2][i]; // 뒤 -> 오
@@ -113,7 +113,7 @@ void rotateD(char dir){
     rotatePlane(1, dir);
 }
 void rotateR(char dir){
-    copyCube();
+    // copyCube();
     if(dir == '+'){
         for(int i = 0 ; i < 3 ; i++){
             OriginalCube[0][i][2] = CopiedCube[2][i][2]; // 뒤 -> 오
@@ -133,7 +133,7 @@ void rotateR(char dir){
     rotatePlane(5, dir);
 }
 void rotateF(char dir){
-    copyCube();
+    // copyCube();
     if(dir == '+'){
         for(int i = 0 ; i < 3 ; i++){
             OriginalCube[0][2][i] = CopiedCube[3][2-i][2]; // 뒤 -> 오
@@ -153,7 +153,7 @@ void rotateF(char dir){
     rotatePlane(2, dir);
 }
 void rotateL(char dir){
-    copyCube();
+    // copyCube();
     if(dir == '+'){
         for(int i = 0 ; i < 3 ; i++){
             OriginalCube[2][i][0] = CopiedCube[0][i][0]; // 뒤 -> 오
@@ -173,7 +173,7 @@ void rotateL(char dir){
     rotatePlane(3, dir);
 }
 void rotateB(char dir){
-    copyCube();
+    // copyCube();
     if(dir == '-'){
         for(int i = 0 ; i < 3 ; i++){
             OriginalCube[0][0][i] = CopiedCube[3][2-i][0]; // 뒤 -> 오
@@ -204,12 +204,13 @@ int main(){
     int T;
     cin >> T;
     while(T--){
-        memset(order, '0', sizeof(order));
+        memset(order, '\0', sizeof(order));
         start();
         int Num;
         cin >> Num;
         for(int i = 0 ; i < Num ; i++){
             cin >> order[i];
+            copyCube();
             if(order[i][0] == 'U'){
                 rotateU(order[i][1]);
             }
@@ -228,7 +229,6 @@ int main(){
             else{
                 rotateB(order[i][1]);
             }
-            // showAns();
         }
         showAns();
     }
