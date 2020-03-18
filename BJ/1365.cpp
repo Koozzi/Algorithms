@@ -9,6 +9,8 @@ int M, a;
 vector<int> ans;
 
 int main(){
+    ios_base::sync_with_stdio(false); 
+    cin.tie(NULL);
     cin >> M >> a;
     ans.push_back(a);
     for(int i = 1 ; i < M ; i++){
