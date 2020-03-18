@@ -4,24 +4,22 @@
 
 using namespace std;
 
-int M;
+int M, a;
 int arr[100001];
 
 vector<int> ans;
 
 int main(){
-    cin >> M;
-    for(int i = 0 ; i < M ; i++){
-        cin >> arr[i];
-    }
-    ans.push_back(arr[0]);
+    cin >> M >> a;
+    ans.push_back(a);
     for(int i = 1 ; i < M ; i++){
-        if(arr[i] > ans.back()){
-            ans.push_back(arr[i]);
+        cin >> a;
+        if(a > ans.back()){
+            ans.push_back(a);
         }
         else{
-            vector<int>::iterator iter = lower_bound(ans.begin(), ans.end(), arr[i]);
-            ans[iter - ans.begin()] = arr[i];
+            vector<int>::iterator iter = lower_bound(ans.begin(), ans.end(), a);
+            ans[iter - ans.begin()] = a;
         }
     }
     cout <<  M - ans.size() << endl;
