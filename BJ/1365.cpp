@@ -5,7 +5,6 @@
 using namespace std;
 
 int M, a;
-int arr[100001];
 
 vector<int> ans;
 
