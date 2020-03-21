@@ -32,6 +32,7 @@ void count(int I, int J){
         }
     }
     ans = max(ans, cnt + 1);
+    cnt = 0;
     for(int j = J + 1 ; j < M ; j++){
         if(map[I][j] == map[I][J]){
             cnt++;
@@ -50,20 +51,20 @@ void count(int I, int J){
     }
     ans = max(ans, cnt + 1);
 }
-
+void changeValue(int I, int J, int nI, int nJ){
+    char tmp = map[I][J];
+    map[I][J] = map[nI][nJ];
+    map[nI][nJ] = tmp;
+}
 void changeRight(int I, int J){
     char tmp;
     int nextI = I;
     int nextJ = J + 1;
     if(nextJ < M){
-        tmp = map[I][J];
-        map[I][J] = map[nextI][nextJ];
-        map[nextI][nextJ] = tmp;
+        changeValue(I, J, nextI, nextJ);
         count(I,J);
         count(nextI, nextJ);
-        tmp = map[I][J];
-        map[I][J] = map[nextI][nextJ];
-        map[nextI][nextJ] = tmp;
+        changeValue(I, J, nextI, nextJ);
     }
     else{
         count(I,J);
@@ -74,14 +75,10 @@ void changeLeft(int I, int J){
     int nextI = I;
     int nextJ = J - 1;
     if(nextJ >= 0){
-        tmp = map[I][J];
-        map[I][J] = map[nextI][nextJ];
-        map[nextI][nextJ] = tmp;    
+        changeValue(I, J, nextI, nextJ);
         count(I,J);
         count(nextI, nextJ);
-        tmp = map[I][J];
-        map[I][J] = map[nextI][nextJ];
-        map[nextI][nextJ] = tmp;
+        changeValue(I, J, nextI, nextJ);
     }
     else{
         count(I,J);
@@ -92,14 +89,10 @@ void changeUp(int I, int J){
     int nextI = I - 1;
     int nextJ = J;
     if(nextI >= 0){
-        tmp = map[I][J];
-        map[I][J] = map[nextI][nextJ];
-        map[nextI][nextJ] = tmp;
+        changeValue(I, J, nextI, nextJ);
         count(I,J);
         count(nextI, nextJ);
-        tmp = map[I][J];
-        map[I][J] = map[nextI][nextJ];
-        map[nextI][nextJ] = tmp;
+        changeValue(I, J, nextI, nextJ);
     }
     else{
         count(I,J);
@@ -110,37 +103,28 @@ void changeDown(int I, int J){
     int nextI = I + 1;
     int nextJ = J;
     if(nextI < M){
-        tmp = map[I][J];
-        map[I][J] = map[nextI][nextJ];
-        map[nextI][nextJ] = tmp;
+        changeValue(I, J, nextI, nextJ);
         count(I,J);
         count(nextI, nextJ);
-        show();
-        tmp = map[I][J];
-        map[I][J] = map[nextI][nextJ];
-        map[nextI][nextJ] = tmp;
+        changeValue(I, J, nextI, nextJ);
     }
     else{
         count(I,J);
     }
 }
-
 int main(){
     cin >> M;
     for(int i = 0 ; i < M ; i++){
         cin >> map[i];
     }
-    // for(int i = 0 ; i < M ; i++){
-    //     for(int j = 0 ; j < M ; j++){
-    //         changeDown(i,j);
-    //         changeLeft(i,j);
-    //         changeRight(i,j);
-    //         changeUp(i,j);
-    //     }
-    // }
-    changeDown(2,2);
-
-    // count(2,2);
+    for(int i = 0 ; i < M ; i++){
+        for(int j = 0 ; j < M ; j++){
+            changeDown(i,j);
+            changeLeft(i,j);
+            changeRight(i,j);
+            changeUp(i,j);
+        }
+    }
     cout << ans << endl;
     return 0;
 }
