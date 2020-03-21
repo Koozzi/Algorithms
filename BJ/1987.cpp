@@ -8,8 +8,6 @@ int M, N, cnt = 0, ans = 1;
 bool visited[26];
 char map[21][21];
 
-vector<pair<int ,int>> v;
-
 typedef struct{
     int moveI, moveJ;
 }Dir;
@@ -70,4 +68,5 @@ BCDE
 
 1 1
 A
+-> 1
 */
