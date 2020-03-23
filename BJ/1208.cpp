@@ -1,45 +1,65 @@
 #include <iostream>
-#include <algorithm>
 #include <vector>
 
 using namespace std;
 
-int N, S, ans = 0, sum = 0;;
-int arr[40];
-vector<int> v;
+vector<int> total(40);
+vector<int> leftS;
+vector<int> rightS;
 
-void solve(int maxCnt, int start){
-    if(v.size() == maxCnt){
-        if(sum == S){
-            ans++;
-        }
+int M, N, ans;
+int sumL, sumR;
+
+void solveL(int start){
+    if(sumL == N){
+        ans++;
     }
-    else{
-        for(int i = start + 1 ; i < N ; i++){
-            v.push_back(arr[i]);
-            sum += arr[i];
-            solve(maxCnt, i);
-            v.pop_back();
-            sum -= arr[i];
-        }
+    leftS.push_back(sumL);
+    for(int i = start + 1 ; i < M / 2 ; i++){
+        sumL += total[i];
+        solveL(i);
+        sumL -= total[i];
+    }
+}
+
+void solveR(int start){
+    if(sumR == N){
+        ans++;
+    }
+    rightS.push_back(sumR);
+    for(int i = start + 1 ; i < M ; i++){
+        sumR += total[i];
+        solveR(i);
+        sumR -= total[i];
     }
 }
 
 int main(){
-    cin >> N >> S;
-    for(int i = 0 ; i < N ; i++){
-        cin >> arr[i];
+    cin >> M >> N;
+    for(int i = 0 ; i < M ; i++){
+        cin >> total[i];
     }
-    sort(arr, arr + N);
-    for(int i = 1 ; i <= N ; i++){
-        for(int j = 0 ; j < N ; j++){
-            v.push_back(arr[j]);
-            sum += arr[j];
-            solve(i, j);
-            v.pop_back();
-            sum -= arr[j];
+
+    for(int i = 0 ; i < M / 2 ; i++){
+        sumL += total[i];
+        solveL(i);
+        sumL -= total[i];
+    }
+    for(int i = M / 2 ; i < M ; i++){
+        sumR += total[i];
+        solveR(i);
+        sumR -= total[i];
+    }
+
+    for(int i = 0 ; i < leftS.size() ; i++){
+        for(int j = 0 ; j < rightS.size() ; j++){
+            int sumLR = leftS[i] + rightS[j];
+            if(sumLR == N){
+                ans++;
+            }
         }
     }
+
     cout << ans << endl;
     return 0;
 }

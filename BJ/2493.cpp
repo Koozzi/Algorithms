@@ -4,13 +4,15 @@
 
 using namespace std;
 
-int M, a, maxNum = 0, maxIdx = 0;
+int M;
 int arr[500000];
 int ans[500000];
-vector<int> v;
 
 int main(){
-    cin >> M;
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    cout.tie(NULL);
+    cin>> M;
     for(int i = 0 ; i < M ; i++){
         cin >> arr[i];
     }
