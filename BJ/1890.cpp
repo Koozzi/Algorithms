@@ -4,7 +4,7 @@ using namespace std;
 
 int M;
 int map[100][100];
-int dp[100][100];
+long long int dp[100][100];
 
 void show(){
     cout << endl;
