@@ -44,21 +44,6 @@ int main(){
     dp[0].push_back('0');
     dp[1].push_back('1');
 
-    // dp[4].push_back('4');
-    // dp[4].push_back('5');
-    // dp[4].push_back('9');
-
-    // dp[5].push_back('3');
-    // dp[5].push_back('9');
-    // dp[5].push_back('9');
-    // dp[5].push_back('1');
-
-    // sumString(4,5);
-
-    // for(int i = dp[6].size() - 1 ; i >= 0 ; i--){
-    //     cout << dp[6][i];
-    // }cout << endl;
-
     for(int i = 2 ; i <= M ; i++){
         sumString(i-2, i-1);
     }
