@@ -9,9 +9,10 @@ int A, B, a;
 int arrA[1000000];
 int arrB[1000000];
 
-// vector<int> ans;
-
 int main(){
+    ios_base::sync_with_stdio(0);
+    cin.tie(0);
+    cout.tie(0);
     cin >> A >> B;
 
     for(int i = 0 ; i < A ; i++){
@@ -29,19 +30,15 @@ int main(){
     while(1){
         if(arrA[i] < arrB[j]){
             cout << arrA[i] << " ";
-            // ans.push_back(arrA[i]);
             i++;
         }
         else if(arrA[i] > arrB[j]){
             cout << arrB[j] << " ";
-            // ans.push_back(arrB[j]);
             j++;
         }
         else{
             cout << arrA[i] << " ";
             cout << arrB[j] << " ";
-            // ans.push_back(arrA[i]);
-            // ans.push_back(arrB[j]);
             i++;
             j++;
         }
@@ -59,21 +56,14 @@ int main(){
     if(check == 1){
         while(j < B){
             cout << arrB[j] << " ";
-            // ans.push_back(arrB[j]);
             j++;
         }
     }
     else if(check == 2){
         while(i < A){
             cout << arrA[i] << " ";
-            // ans.push_back(arrA[i]);
             i++;
         }
     }
-
-    // for(int i = 0 ; i < ans.size() ; i++){
-    //     cout << ans[i] << " ";
-    // }cout << endl;
-
     return 0;
 }
