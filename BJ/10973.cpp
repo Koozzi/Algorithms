@@ -13,7 +13,7 @@ int main(){
         cin >> arr[i];
     }
 
-    if(next_permutation(arr, arr+M)){
+    if(prev_permutation(arr, arr+M)){
         for(int i = 0 ; i < M ; i++){
             cout << arr[i] << " ";
         }
