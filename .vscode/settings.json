@@ -16,6 +16,7 @@
         "memory": "cpp",
         "ostream": "cpp",
         "list": "cpp",
-        "stack": "cpp"
+        "stack": "cpp",
+        "ios": "cpp"
     }
 }
