@@ -9,7 +9,7 @@ bool visited[2001];
 vector<int> v[2001];
 vector<int> ans;
 
-bool DFS(int startNode){
+void DFS(int startNode){
     if(ans.size() == 5){
         cout << 1 << "\n";
         exit(0);
