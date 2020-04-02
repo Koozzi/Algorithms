@@ -1,38 +1,30 @@
 #include <iostream>
-#include <queue>
 #include <vector>
-#include <cstring>
 
 using namespace std;
 
 int M, N;
 bool visited[2001];
+
 vector<int> v[2001];
+vector<int> ans;
 
-void BFS(int start){
-    memset(visited, false, sizeof(visited));
-    queue<pair<int, int>> q;
-    q.push(make_pair(start, 0));
-    visited[start] = true;
-    while(!q.empty()){
-        int c = q.front().first;
-        int d = q.front().second;
-        q.pop();
-
-        if(d >= 4){
-            cout << 1 << "\n";
-            exit(0);
-        }
-
-        for(int i = 0 ; i < v[c].size() ; i++){
-            int n = v[c][i];
-            if(!visited[n]){
-                q.push(make_pair(n, d + 1));
-                visited[n] = true;
-            }
+bool DFS(int startNode){
+    if(ans.size() == 5){
+        cout << 1 << "\n";
+        exit(0);
+    }
+    for(int i = 0 ; i < v[startNode].size() ; i++){
+        if(!visited[v[startNode][i]]){
+            ans.push_back(v[startNode][i]);
+            visited[v[startNode][i]] = true;
+            DFS(v[startNode][i]);
+            ans.pop_back();
+            visited[v[startNode][i]] = false;
         }
     }
 }
+
 int main(){
     cin >> M >> N;
     for(int i = 0 ; i < N ; i++){
@@ -40,11 +32,13 @@ int main(){
         v[a].push_back(b);
         v[b].push_back(a);
     }
-    for(int i = 0 ; i < M ; i++){
-        BFS(i);
+    for(int i = 1 ; i <= M ; i++){
+        ans.push_back(i);
+        visited[i] = true;
+        DFS(i);
+        ans.pop_back();
+        visited[i] = false;
     }
-
     cout << 0 << "\n";
-
     return 0;
 }

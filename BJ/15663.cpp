@@ -1,0 +1,54 @@
+#include <iostream>
+#include <string>
+#include <algorithm>
+#include <vector>
+#include <set>
+
+using namespace std;
+
+int M, N;
+bool used[8];
+
+vector<int> arr;
+vector<int> v;
+set<string> ans;
+
+void func(){
+    if(v.size() == N){
+        string newstr = "";
+        for(int i = 0 ; i < v.size() ; i++){
+            newstr.push_back(v[i] + 48);
+        }
+        if(ans.count(newstr) == 0){
+            ans.insert(newstr);
+            for(int i = 0 ; i < v.size() ; i++){
+                cout << v[i] << " ";
+            }
+            cout << "\n";
+        }
+        return;
+    }
+    for(int i = 0 ; i < arr.size() ; i++){
+        if(!used[i]){
+            v.push_back(arr[i]);
+            used[i] = true;
+            func();
+            v.pop_back();
+            used[i] = false;
+        }
+    }
+}
+
+int main(){
+    ios_base::sync_with_stdio(0);
+    cout.tie(0);
+    cin.tie(0);
+    cin >> M >> N;
+    for(int i = 0 ; i < M ; i++){
+        int a; cin >> a;
+        arr.push_back(a);
+    }
+    sort(arr.begin(), arr.end());
+    func();
+    return 0;
+}

@@ -1,21 +1,20 @@
 #include <iostream>
-#include <algorithm>
-#include <vector>
+#include <set>
 
 using namespace std;
 
-vector<int> v;
-
 int main(){
-    vector<int> v;
-    // for(int i = 1 ; i < 11 ; i++){
-    //     v.push_back(i);
-    // }
-    v.push_back(1);
-    v.push_back(3);
-    v.push_back(5);
-    v.push_back(7);
+    set<int> s;
+    set<int>::iterator iter;
+    for(int i = 1; i <= 10 ; i++){
+        s.insert(i);
+    }
+    iter = s.find(10);
+    cout << *iter << "\n";
 
-    int tmp = v.size() - (lower_bound(v.begin(), v.end(), 5) - v.begin());
-    cout << tmp << endl;
+    iter = s.end();
+    cout << *iter << "\n";
+
+    iter = s.find(11);
+    cout << *iter << "\n";
 }
