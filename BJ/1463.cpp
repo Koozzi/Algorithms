@@ -17,10 +17,10 @@ int main(){
             dp[i] = dp[i+1] + 1;
         }
         else if(i * 3 > M && i * 2 <= M){
-            dp[i] = min(dp[i+1], dp[i*2]);
+            dp[i] = min(dp[i+1], dp[i*2]) + 1;
         }
         else{
-            dp[i] = min(dp[i+1], min(dp[i*2], dp[i*3]));
+            dp[i] = min(dp[i+1], min(dp[i*2], dp[i*3])) + 1;
         }
     }
     cout << dp[1] << "\n";
