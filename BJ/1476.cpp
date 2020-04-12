@@ -3,26 +3,21 @@
 using namespace std;
 
 int main(){
-    int E, S, M, year = 1;
-    int e = 1;
-    int s = 1;
-    int m = 1;
-    cin >> E >> S >> M;
-    while(e != E || s != S || m != M){
-        e++;
-        s++;
-        m++;
-        if(e > 15){
-            e = 1;
+    int a, b, c;
+    cin >> a >> b >> c;
+
+    int A = 1, B = 1, C = 1;
+    int ans = 1;
+    while(1){
+        if(a == A && b == B && c == C){
+            break;
         }
-        if(s > 28){
-            s = 1;
-        }
-        if(m > 19){
-            m = 1;
-        }
-        year++;
+        A++; B++; C++;
+        if(A > 15) A = 1;
+        if(B > 28) B = 1;
+        if(C > 19) C = 1;
+        ans++;
     }
-    cout << year << endl;
+    cout << ans << "\n";
     return 0;
 }

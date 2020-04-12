@@ -1,19 +1,17 @@
 #include <iostream>
-#include <vector>
 
 using namespace std;
 
 int M, N, sum, ans;
+int arr[20];
 
-vector<int> arr(20);
-
-void solve(int start){
+void func(int start){
     if(sum == N){
         ans++;
     }
     for(int i = start + 1 ; i < M ; i++){
         sum += arr[i];
-        solve(i);
+        func(i);
         sum -= arr[i];
     }
 }
@@ -25,12 +23,46 @@ int main(){
     }
     for(int i = 0 ; i < M ; i++){
         sum += arr[i];
-        solve(i);
+        func(i);
         sum -= arr[i];
     }
-    cout << ans << endl;
+
+    cout << ans << "\n";
     return 0;
 }
+// #include <iostream>
+// #include <vector>
+
+// using namespace std;
+
+// int M, N, sum, ans;
+
+// vector<int> arr(20);
+
+// void solve(int start){
+//     if(sum == N){
+//         ans++;
+//     }
+//     for(int i = start + 1 ; i < M ; i++){
+//         sum += arr[i];
+//         solve(i);
+//         sum -= arr[i];
+//     }
+// }
+
+// int main(){
+//     cin >> M >> N;
+//     for(int i = 0 ; i < M ; i++){
+//         cin >> arr[i];
+//     }
+//     for(int i = 0 ; i < M ; i++){
+//         sum += arr[i];
+//         solve(i);
+//         sum -= arr[i];
+//     }
+//     cout << ans << endl;
+//     return 0;
+// }
 
 
 // #include <iostream>
