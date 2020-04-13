@@ -22,7 +22,7 @@ int main(){
 
     int ans = 0;
     for(int i = 0 ; i < 10 ; i++){
-        ans += dp[M][i];
+        ans = (ans + dp[M][i]) % 10007;
     }
     cout << ans << "\n";
     return 0;
