@@ -1,7 +1,5 @@
 #include <iostream>
 #include <algorithm>
-#include <vector>
-#include <stack>
 
 using namespace std;
 
@@ -14,6 +12,7 @@ int main(){
     for(int i = 0 ; i < M ; i++){
         cin >> arr[i];
     }
+    
     dp[0] = arr[0];
 
     if(arr[1] > arr[0]) dp[1] = dp[0] + arr[1];
@@ -28,10 +27,13 @@ int main(){
         }
         dp[i] = maxDP + arr[i];
     }
+    
     ans = dp[0];
     for(int i = 1 ; i < M ; i++){
         ans = max(ans, dp[i]);
     }
+    
     cout << ans << "\n";
+    
     return 0;
 }
