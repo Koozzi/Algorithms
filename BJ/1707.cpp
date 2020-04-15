@@ -7,50 +7,61 @@
 using namespace std;
 
 int T, M, N;
-int check[200001];
-bool visited[200001]; 
+bool flag;
+int visited[20001]; 
 
-vector<int> v[200001];
+vector<int> v[20001];
 
-void BFS(){
-    memset(visited, false, sizeof(visited));
-    memset(check, 0, sizeof(check));
+void BFS(int start){
     queue<int> q;
-    q.push(1);
-    visited[1] = true;
-    check[1] = 1;
+    q.push(start);
+    visited[start] = 1;
     while(!q.empty()){
         int c = q.front();
         q.pop();
         for(int i = 0 ; i < v[c].size() ; i++){
             int n = v[c][i];
-            if(visited[n]){
-                if(check[n] == check[c]){
+            if(visited[n] != 0){
+                if(visited[n] == visited[c]){
                     cout << "NO" << "\n";
+                    flag = false;
                     return;
                 }
             }
             else{
                 q.push(n);
-                visited[n] = true;
-                check[n] = check[c] * -1;
+                visited[n] = visited[c] * -1;
             }
         } 
     }
-    cout << "YES" << "\n";
 }
 
 int main(){
+    ios_base::sync_with_stdio(0);
+    cin.tie(0);
     cin >> T;
     while(T--){
+        memset(visited, 0, sizeof(visited));
         cin >> M >> N;
+        flag = true;
         for(int i = 0 ; i < N ; i++){
             int a, b; cin >> a >> b;
             v[a].push_back(b);
             v[b].push_back(a);
         }
-        BFS();
+        for(int i = 1 ; i <= M ; i++){
+            if(visited[i] == 0 && flag){
+                BFS(i);
+            }
+        }
+
+        if(flag) cout << "YES" << "\n";
+
+        for(int i = 1 ; i <= M ; i++){
+            v[i].clear();
+        }
     }
+    return 0;
 }
 
 // #include <iostream>
