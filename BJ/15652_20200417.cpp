@@ -7,17 +7,17 @@ int M, N;
 
 vector<int> ans;
 
-void func(){
+void func(int start){
     if(ans.size() == N){
         for(int i = 0 ; i < ans.size() ; i++){
             cout << ans[i] << " ";
         }cout << "\n";
         return;
     }
-
-    for(int i = 1 ; i <= M ; i++){
+    
+    for(int i = start ; i <= M ; i++){
         ans.push_back(i);
-        func();
+        func(i);
         ans.pop_back();
     }
 }
@@ -27,9 +27,13 @@ int main(){
     cin.tie(0);
     cout.tie(0);
 
-    cin >>  M >> N;
+    cin >> M >> N;
 
-    func();
+    for(int i = 1 ; i <= M ; i++){
+        ans.push_back(i);
+        func(i);
+        ans.pop_back();
+    }
 
     return 0;
 }

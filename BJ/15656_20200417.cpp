@@ -1,9 +1,11 @@
 #include <iostream>
+#include <algorithm>
 #include <vector>
 
 using namespace std;
 
 int M, N;
+int arr[8];
 
 vector<int> ans;
 
@@ -15,21 +17,30 @@ void func(){
         return;
     }
 
-    for(int i = 1 ; i <= M ; i++){
-        ans.push_back(i);
+    for(int i = 0 ; i < M ; i++){
+        ans.push_back(arr[i]);
         func();
         ans.pop_back();
     }
 }
 
-int main(){
+int main(){ 
     ios_base::sync_with_stdio(0);
     cin.tie(0);
     cout.tie(0);
 
-    cin >>  M >> N;
+    cin >> M >> N;
+    for(int i = 0 ; i < M ; i++){
+        cin >> arr[i];
+    }
 
-    func();
+    sort(arr, arr+M);
+
+    for(int i = 0 ; i < M ; i++){
+        ans.push_back(arr[i]);
+        func();
+        ans.pop_back();
+    }
 
     return 0;
 }
