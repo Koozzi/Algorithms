@@ -35,11 +35,13 @@ int main()
         int x = q.front().first.first; // i
         int y = q.front().first.second; // j
         int z = q.front().second; 
-        if(x == n - 1 && y == m - 1){
+        q.pop();
+
+        if(x == n - 1 && y == m - 1){ // 추가 내용 
             cout << d[x][y][z] << "\n";
             return 0;
         }
-        q.pop();
+
         for(int k=0; k<4; k++){
             int nx = x+dx[k];
             int ny = y+dy[k];
@@ -66,6 +68,6 @@ int main()
     //     cout << -1 << "\n";
     // }
 
+    cout << -1 << "\n";
     return 0;
-
 }

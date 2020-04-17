@@ -1,3 +1,8 @@
+/*
+flood함수 내에서 물이 확장되는 곳(i,j) 를 계속 추가하는데 
+이 때, 메모리 초과가 나지 않도록 유의할 것.
+*/
+
 #include <iostream>
 #include <string>
 #include <queue>
@@ -77,6 +82,7 @@ void BFS(int startI, int startJ){
             if(!visited[nextI][nextJ] && map[nextI][nextJ] != '*' && map[nextI][nextJ] != 'X'){
                 map[nextI][nextJ] = 'S';
                 q.push({{nextI, nextJ}, depth+1});
+                visited[nextI][nextJ] = true;
             }
         }
     }
