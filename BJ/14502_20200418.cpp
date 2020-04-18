@@ -17,9 +17,13 @@ int main(){
             continue;
         }
         dp[i] = max(dp[i+1], dp[i+t[i]] + p[i]);
+        /*
+        dp[i+1] : i번 째 상담을 진행하지 않을 경우
+        dp[i+t[i]] + p[i] : i번 째 상담을 진행할 경우
+        */
     }
     
     cout << dp[1] << "\n";
-    
+
     return 0;
 }
