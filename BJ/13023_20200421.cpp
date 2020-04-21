@@ -46,7 +46,11 @@ int main()
         v[b].push_back(a);
     }
     for(int i = 0 ; i  < M ; i++){
+        ans.push_back(i);
+        visited[i] = true;
         DFS(i);
+        ans.pop_back();
+        visited[i] = false;
     }
     cout << 0 << "\n";
     return 0;
