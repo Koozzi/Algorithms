@@ -43,6 +43,7 @@ int main(){
     ios_base::sync_with_stdio(0);
     cin.tie(0);
     cout.tie(0);
+
     cin >> N >> M;
     for(int i = 0 ; i < M ; i++){
         cin >> map[i];
@@ -50,6 +51,7 @@ int main(){
             ans[i][j] = INIT_NUM;
         }
     }
-    cout << ans[M-1][N-1] << "\n";
+
+    cout << BFS() << "\n";
     return 0;
 }
