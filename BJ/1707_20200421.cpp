@@ -1,7 +1,6 @@
 #include <iostream>
 #include <vector>
 #include <queue>
-#include <cstring>
 #define MAX_NUM 20001
 using namespace std;
 
@@ -11,7 +10,8 @@ bool flag;
 vector<int> v[MAX_NUM];
 
 void init()
-{   
+{
+    flag = true;
     for (int i = 1; i <= M; i++)
     {
         v[i].clear();
@@ -58,6 +58,7 @@ int main()
     cin >> T;
     while (T--)
     {
+        init();
         cin >> M >> N;
         for (int i = 0; i < N; i++)
         {
@@ -76,7 +77,6 @@ int main()
         if (flag){
             cout << "YES" << "\n";
         }
-        init();
     }
     return 0;
 }
