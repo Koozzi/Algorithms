@@ -1,26 +1,21 @@
 #include <iostream>
 #include <queue>
 #include <algorithm>
+
 using namespace std;
 
 int M, N, map[1000][1000];
 bool visited[1000][1000];
+
 typedef struct{
     int moveI, moveJ;
 }Dir;
 Dir moveDir[4] = {{0,1}, {0,-1}, {1,0}, {-1,0}};
 
+queue<pair<pair<int, int>, int>> q;
+
 int BFS(){
     int ans = 0;
-    queue<pair<pair<int, int>, int>> q;
-    for(int i = 0 ; i < M ; i++){
-        for(int j = 0 ; j < N ; j++){
-            if(map[i][j] == 1){
-                q.push({{i, j}, 0});
-                visited[i][j] = true;
-            }
-        }
-    }
     while(!q.empty()){
         int currentI = q.front().first.first;
         int currentJ = q.front().first.second;
@@ -62,6 +57,10 @@ int main(){
     for(int i = 0 ; i < M ; i++){
         for(int j = 0 ; j < N ; j++){
             cin >> map[i][j];
+            if(map[i][j] == 1){
+                q.push({{i,j} ,0});
+                visited[i][j] = true;
+            }
         }
     }
 

@@ -4,8 +4,7 @@
 using namespace std;
 
 string map[50];
-int M, N, startI, startJ, destI, destJ;
-bool visited[50][50];
+int M, N, startI, startJ;
 
 queue<pair<int,int>> water;
 queue<pair<pair<int, int>, int>> q;
@@ -59,7 +58,6 @@ void BFS(){
         if(depthCheck != depth){
             depthCheck++;
             flood();
-            show();
         }
 
         for(int i = 0 ; i < 4 ; i++){
@@ -88,11 +86,7 @@ int main(){
     for(int i = 0 ; i < M ; i++){
         cin >> map[i];
         for(int j = 0 ; j < N ; j++){
-            if(map[i][j] == 'D'){
-                destI = i;
-                destJ = j;
-            }
-            else if(map[i][j] == 'S'){
+            if(map[i][j] == 'S'){
                 startI = i;
                 startJ = j;
             }
