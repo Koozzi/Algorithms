@@ -5,6 +5,9 @@ using namespace std;
 int M, arr[1000], dp[1000];
 
 int main(){
+    ios_base::sync_with_stdio(0);
+    cin.tie(0);
+    cout.tie(0);
     cin >> M;
     for(int i = 0 ; i < M ; i++){
         cin >> arr[i];
