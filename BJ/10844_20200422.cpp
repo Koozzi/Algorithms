@@ -9,23 +9,20 @@ int main(){
     cin >> M;
     for(int i = 1 ; i < 10 ; i++){
         dp[1][i] = 1;
-        ans++;
     }
     for(int i = 2 ; i < M+1 ; i++){
         ans = 0;
-        for(int k = 0 ; k < 10 ; k++){
-            if(k != 0 && k != 9){
-                dp[i][k] = (dp[i-1][k-1] + dp[i-1][k+1]) % DIV_NUM;
-            }
-            if(k == 0){
-                dp[i][k] = dp[i-1][1];
-            }
-            if(k == 9){
-                dp[i][k] = dp[i-1][8];
-            }
-            ans = (ans + dp[i][k] % DIV_NUM);
+        dp[i][0] = dp[i-1][1];
+        dp[i][9] = dp[i-1][8];
+        for(int k = 1 ; k < 9 ; k++){
+            dp[i][k] = (dp[i-1][k-1] + dp[i-1][k+1]) % DIV_NUM;
         }
     }
+
+    for(int i = 0 ; i < 10 ; i++){
+        ans = (ans + dp[M][i]) % DIV_NUM;
+    }
+
     cout << ans << "\n";
     return 0;
 }
