@@ -9,8 +9,6 @@ int main(){
     cin >> M >> N;
     for(int i = 0 ; i < M+1 ; i++){
         dp[i][1] = 1;
-    }
-    for(int i = 0 ; i < M+1 ; i++){
         dp[i][2] = i + 1;
     }
     for(int j = 3 ; j < N+1 ; j++){
