@@ -15,17 +15,36 @@ void init(){
 
 int main(){
     cin >> M;
-    for(int i = M-1 ; i > 0 ; i--){
-        if(i * 2 > M){
-            dp[i] = dp[i+1] + 1;
+    // for(int i = M-1 ; i > 0 ; i--){
+    //     if(i * 2 > M){
+    //         dp[i] = dp[i+1] + 1;
+    //     }
+    //     else if(i * 2 <= M && i * 3 > M){
+    //         dp[i] = min(dp[i+1], dp[i*2]) + 1;
+    //     }
+    //     else if(i + 1 <= M){
+    //         dp[i] = min(dp[i+1], min(dp[i*2], dp[i*3])) + 1;
+    //     }
+    // }
+
+    dp[1] = 0;
+    dp[2] = 1;
+    dp[3] = 1;
+
+    for(int i = 4 ; i <= M ; i++){
+        if(i%3 == 0 && i%2 == 0){
+            dp[i] = min(dp[i/3], dp[i/2]) + 1;
         }
-        else if(i * 2 <= M && i * 3 > M){
-            dp[i] = min(dp[i+1], dp[i*2]) + 1;
+        else if(i%3 == 0 && i%2 != 0){
+            dp[i] = min(dp[i-1], dp[i/3]) + 1;
         }
-        else if(i + 1 <= M){
-            dp[i] = min(dp[i+1], min(dp[i*2], dp[i*3])) + 1;
+        else if(i%3 != 0 && i%2 == 0){
+            dp[i] = min(dp[i-1], dp[i/2]) + 1;
+        }
+        else{
+            dp[i] = dp[i-1] + 1;
         }
     }
-    cout << dp[1] << "\n";
+    cout << dp[M] << "\n";
     return 0;
 }
