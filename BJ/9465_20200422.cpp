@@ -31,12 +31,6 @@ int main(){
             dp[1][i] = max(dp[0][i-1], dp[0][i-2]) + arr[1][i];
         }
 
-        for(int i = 0 ; i < 2 ; i++){
-            for(int j = 1 ; j < M+1 ; j++){
-                cout << dp[i][j] << " ";
-            }cout << "\n";
-        }
-
         cout << max(dp[0][M], dp[1][M]) << "\n";
     }
     return 0;
