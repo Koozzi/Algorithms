@@ -14,7 +14,6 @@ int main(){
 
     cin >> M >> K;
     
-    v.push_back({0,0});
     for(int i = 1 ; i <= M ; i++){
         cin >> arr[i][0] >> arr[i][1];
     }
