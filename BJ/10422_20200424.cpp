@@ -10,8 +10,9 @@ void DP(){
     dp[0] = 1;
     for(int i = 2 ; i <= 5000 ; i += 2){
         for(int j = 2 ; j <= i ; j += 2){
-            dp[i] += (dp[j-2] * dp[i-j]) % DIV_NUM;
+            dp[i] = (dp[i] + dp[j-2] * dp[i-j]) % DIV_NUM;
         }
+        dp[i] = (dp[i] % DIV_NUM);
     }
 }
 
