@@ -3,19 +3,14 @@
 using namespace std;
 
 int M;
-int arr[101];
-int dp[101][21];
-
-void show(){
-    cout << "\n";
-    for(int i = 1 ; i <= M ; i++){
-        for(int j = 0 ; j <= 20 ; j++){
-            cout << dp[i][j] << " ";
-        }cout << "\n";
-    }
-}
+long long int arr[101];
+long long int dp[101][21];
 
 int main(){
+    ios_base::sync_with_stdio(0);
+    cin.tie(0);
+    cout.tie(0);
+
     cin >> M;
     for(int i = 1 ; i <= M ; i++){
         cin >> arr[i];
@@ -28,15 +23,15 @@ int main(){
         for(int j = 0 ; j <= 20 ; j++){
             if(dp[i][j] != 0){
                 if(j + val <= 20){
-                    dp[i+1][j+val] += dp[i][j];
+                    dp[i + 1][j + val] += dp[i][j];
                 }
                 if(j - val >= 0){
-                    dp[i+1][j-val] += dp[i][j];
+                    dp[i + 1][j - val] += dp[i][j];
                 }
             }
         }
     }
-    show();
+    
     cout << dp[M-1][arr[M]] << "\n";
     return 0;
 }
