@@ -9,10 +9,10 @@ int sum[501];
 int dp[501][501];
 
 int DP(){
-    for(int k = 1 ; k < M ; k++){ // k : 길이
+    for(int k = 1 ; k < M ; k++){
         for(int i = 1 ; i <= M-k ; i++){
             dp[i][i+k] = INF;
-            for(int j = i = i ; j < i+k ; j++){
+            for(int j = i ; j < i+k ; j++){
                 dp[i][i+k] = min(dp[i][i+k], dp[i][j] + dp[j+1][i+k]);
             }
             dp[i][i+k] += sum[i+k] - sum[i-1];
