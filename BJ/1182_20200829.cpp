@@ -3,7 +3,7 @@
 #include <algorithm>
 using namespace std;
 
-int N, S, arr[20], ans, sum;
+int N, S, arr[20], ans, num, sum;
 
 void func(int start){
     if(sum == S){
