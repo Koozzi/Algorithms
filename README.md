@@ -1,3 +1,3 @@
 # Algorithms
 
-asd
+반복 숙달
