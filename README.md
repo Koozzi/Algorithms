@@ -22,7 +22,7 @@ Set이랑 크게 다를 것이 없다. 다만 Map은 Set과 다르게 Key와 Val
 
 ## String find()
 ~~~c
-#include <iotream>
+#include <iostream>
 #include <string>
 using namespace std;
 
