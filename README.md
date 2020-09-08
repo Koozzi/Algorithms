@@ -20,3 +20,17 @@ set은 '어디에' 데이터를 추가할지에 대한 정보가 없음. 그냥 
 
 Set이랑 크게 다를 것이 없다. 다만 Map은 Set과 다르게 Key와 Value 한 짝을 이루어서 저장한다. 
 
+## String find()
+~~~c
+#include <iotream>
+#include <string>
+using namespace std;
+
+int main(){
+    string s("asdKOOZZIsdhf");
+    long long isIN = s.find("KOOZZI");
+    if(isIN != string::npos){ // 포함하고 있다는 뜻.
+        ...
+    }
+}
+~~~
