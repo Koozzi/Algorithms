@@ -35,6 +35,6 @@ int main(){
     trie tri;
     tri.insert(s);
     cout << tri.find("ABC") << "\n";
-    cout << tri.find("ABD") << "\n";
+    cout << tri.find("CDE") << "\n";
     return 0;
 }
