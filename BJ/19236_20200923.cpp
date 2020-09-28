@@ -3,127 +3,218 @@
 #include <vector>
 using namespace std;
 
-typedef struct{
-    int I, J, Dir;
-    bool eaten = false; // 안 먹힘
-} fish_info;
-fish_info fish[17];
+struct fish_info{
+    int I, J, D;
+    bool Eaten;
+}; fish_info Fish[17];
 
-typedef struct{
+struct coppied_fish_info{
+    int I, J, D;
+    bool Eaten;
+}; coppied_fish_info Coppied_Fish[17];
+
+struct Dir{
     int moveI, moveJ;
-}Dir;
-Dir moveDir[9] = {{0,0}, {-1,0}, {-1,-1}, {0,-1}, {1,-1}, {1,0}, {1,1}, {0,1}, {-1,1}};
+}; 
+//                           북      서북      서      서남     남     동남     동      동북 
+Dir move_dir[9] = { {0,0}, {-1,0}, {-1,-1}, {0,-1}, {1,-1}, {1,0}, {1,1}, {0,1}, {-1,1}};
 
 int ans, map[4][4];
-bool moved;
-vector<int> v;
+int SharkI, SharkJ, SharkD;
 
-void show_fish(){
-    cout << "-----------------\n";
+vector<int> Eat;
+
+void show_map(){
+    cout << "\n";
     for(int i = 0 ; i < 4 ; i++){
         for(int j = 0 ; j < 4 ; j++){
-            cout << map[i][j] << " ";
+            int n = map[i][j];
+            if(n == 0 || n == -1){
+                cout << n << "\t";
+                continue;
+            }
+            int d = Fish[n].D;
+            cout << map[i][j];
+             // ↖, ←, ↙, ↓, ↘, →, ↗ 
+            if(d == 1) cout << "↑";
+            else if(d == 2) cout << "↖";
+            else if(d == 3) cout << "←";
+            else if(d == 4) cout << "↙";
+            else if(d == 5) cout << "↓";
+            else if(d == 6) cout << "↘";
+            else if(d == 7) cout << "→";
+            else cout << "↗";
+            cout << "\t";
         }cout << "\n";
     }
-    cout << "-----------------\n";
+    cout << "\n";
 }
-
-void change_fish(int c, int n){
-    // show_fish();
-    // cout << c << " " << n << "\n";
-    map[fish[c].I][fish[c].J] = n;
-    map[fish[n].I][fish[n].J] = c;
-
-    int tmp = fish[c].I;
-    fish[c].I = fish[n].I;
-    fish[n].I = tmp;
-
-    tmp = fish[c].J;
-    fish[c].J = fish[n].J;
-    fish[n].J = tmp;
-}
-
 void move_fish(){
-    for(int fish_num = 1 ; fish_num <= 16 ; fish_num++){
-        if(fish[fish_num].eaten) continue; // 이미 먹혔으면 이동 ㄴㄴ
-        bool moved = false;
-        int cnt = 0;
-        while(!moved){ // 물고기가 이동할 곳이 없을 때도 고려해야함
-            if(cnt == 7) break;
-            if(fish[fish_num].Dir == 9) fish[fish_num].Dir = 1;
-            int nextI = fish[fish_num].I + moveDir[fish[fish_num].Dir].moveI;
-            int nextJ = fish[fish_num].J + moveDir[fish[fish_num].Dir].moveJ;  
+    for(int i = 1 ; i <= 16 ; i++){
+        if(Fish[i].Eaten) continue;
+        int change_dir_cnt = 0;
+        int I = Fish[i].I;
+        int J = Fish[i].J;
+        int D = Fish[i].D;
+        while(change_dir_cnt < 8){
+            if(Fish[i].D > 8) Fish[i].D = 1;
+            int nextI = Fish[i].I + move_dir[Fish[i].D].moveI;
+            int nextJ = Fish[i].J + move_dir[Fish[i].D].moveJ;
+        
             if(nextI < 0 || nextJ < 0 || nextI > 3 || nextJ > 3){
-                // nextI, nextJ가 공간 밖이면 방향을 돌리고 컨티뉴
-                cnt++; fish[fish_num].Dir++; continue;
+                change_dir_cnt++;
+                Fish[i].D++;
+                continue;
             }
-            if(map[nextI][nextJ] == -1 || map[nextI][nextJ] == 0){
-                // nextI, nextJ에 물고기가 없거나 상어가 있으면 방향을 돌리고 컨티뉴
-                cnt++; fish[fish_num].Dir++; continue;
+
+            if(nextI == SharkI && nextJ == SharkJ){ // 먹혔거나 상어가 있을 때 
+                change_dir_cnt++;
+                Fish[i].D++;
+                continue;
             }
-            int next_fish_num = map[nextI][nextJ];
-            change_fish(fish_num, next_fish_num);
-            moved = true;
+            
+            int nextF = map[nextI][nextJ];
+            int nextD = Fish[nextF].D;
+
+            if(nextF == 0){
+                map[I][J] = 0;
+                map[nextI][nextJ] = i;
+                Fish[i].I = nextI;
+                Fish[i].J = nextJ;
+                break;
+            }
+
+            Fish[i].I = nextI;
+            Fish[i].J = nextJ;
+
+            Fish[nextF].I = I;
+            Fish[nextF].J = J;
+
+            map[I][J] = nextF;
+            map[nextI][nextJ] = i;
+            break;
         }
     }
 }
-
-bool check_shark_can_eat(int num, int I, int J, int D){
-    int cnt = 0;
+vector<int> check_shark_can_eat(int I, int J, int D){
+    vector<int> v;
     while(1){
-        if(cnt == 3) break;
-        int nextI = I + moveDir[D].moveI;
-        int nextJ = J + moveDir[D].moveJ;
-        if(nextI < 0 || nextJ < 0 || nextI > 3 || nextJ > 3) break;
-        int next = map[nextI][nextJ];
-        if(next == num) return true;
-        I = nextI; J = nextJ;
-        cnt++;
+        int nextI = I + move_dir[D].moveI;
+        int nextJ = J + move_dir[D].moveJ;
+
+        I = nextI;
+        J = nextJ;
+
+        if(nextI <  0 || nextJ < 0 || nextI > 3 || nextJ > 3) break;
+        if(map[nextI][nextJ] == 0 || map[nextI][nextJ] == -1) continue;
+        
+        v.push_back(map[nextI][nextJ]);
     }
-    return false;
+    return v;
 }
 
-bool check_shark_can_move(int I, int J, int D){
-    while(1){
-        int nextI = I + moveDir[D].moveI;
-        int nextJ = J + moveDir[D].moveJ;
-        if(nextI < 0 || nextJ < 0 || nextI > 3 || nextJ > 3) break;
-        int next = map[nextI][nextJ];
-        I = nextI; J = nextJ;
-        if(next != -1) return true;
-    }
-    return false;
+void show_dir(int d){
+            if(d == 1) cout << "↑";
+            else if(d == 2) cout << "↖";
+            else if(d == 3) cout << "←";
+            else if(d == 4) cout << "↙";
+            else if(d == 5) cout << "↓";
+            else if(d == 6) cout << "↘";
+            else if(d == 7) cout << "→";
+            else cout << "↗";
 }
 
-void shark_eat(int I, int J, int D){
-    
-    if(!check_shark_can_move(I, J, D) && moved){
-        int sum = 0;
-        for(int i = 0 ; i < v.size() ; i++){
-            sum += v[i];
-        }
-        ans = max(ans, sum);
+void solve(int num, int sum){
+    sum += num;
+    ans = max(ans, sum);
+
+    int I = Fish[num].I;
+    int J = Fish[num].J;
+    int D = Fish[num].D;
+    Fish[num].Eaten = true;
+
+    map[I][J] = 0;
+
+    // printf("%d을 먹고 현재 위치는 (%d, %d) 방향은 ", num, I, J);
+    // show_dir(D);
+    // cout << "\n";
+    // show_map();
+
+    // for(int i = 1 ; i < 17; i++){
+    //     if(!Fish[i].Eaten){
+    //         printf("%d의 위치 : (%d, %d)\n", i, Fish[i].I, Fish[i].J);
+    //     }
+    // }
+
+    SharkI = I;
+    SharkJ = J;
+    SharkD = D;
+
+    move_fish();
+    // printf("상어가 %d번 물고기를 먹고 다른 물고기들이 움직인 후\n", num);
+    // show_map();
+
+    vector<int> v = check_shark_can_eat(I, J, D);
+    if(v.size() == 0){
+        // printf("상어가 움직일 수 있는 곳 없음\n");
+        // for(int i = 0 ; i < Eat.size() ; i++){
+        //     cout << Eat[i] << " ";
+        // }cout << "\n";
+        // cout << ans << "\n";
         return;
     }
+    // else{
+    //     cout << "상어가 갈 수 있는 곳 ->  ";
+    //     for(int i = 0 ;  i < v.size() ; i++){
+    //         cout << v[i] << " ";
+    //     }cout << "\n";
+    //     cout << "\n";
+    // }
 
-    move_fish(); moved = true;
-    
+    // printf("상어의 위치 : (%d, %d)\n", SharkI, SharkJ);
+    // printf("%d의 위치 : (%d, %d)\n", num, I, J);
+    // printf("Ans : %d\n", ans);
+
+    int coppied_map[4][4];
+    for(int i = 0 ; i < 4; i++){
+        for(int j = 0 ; j < 4 ; j++){
+            coppied_map[i][j] = map[i][j];
+        }
+    }
+
+    vector<pair<pair<int, int>, pair<int, bool>>> copied(17);
     for(int i = 1 ; i < 17 ; i++){
-        if(fish[i].eaten) continue;
-        if(check_shark_can_eat(i, I, J, D)){
-            v.push_back(i);
-            fish[i].eaten = true;
-        
-            map[fish[i].I][fish[i].J] = 0;
-            map[I][J] = -1;
-        
-            shark_eat(fish[i].I, fish[i].J, fish[i].Dir);
+        copied[i].first.first = Fish[i].I;
+        copied[i].first.second = Fish[i].J;
+        copied[i].second.first = Fish[i].D;
+        copied[i].second.second = Fish[i].Eaten;
+    }
 
-            map[fish[i].I][fish[i].J] = i;
-            map[I][J] = 0;
+    
+    // for(int i = 0 ; i < v.size() ; i++){
+    //     cout << v[i] << " ";
+    // }cout << "\n";
 
-            fish[i].eaten = false;
-            v.pop_back();
+    for(int i = 0 ; i < v.size() ; i++){
+        int nextF = v[i];
+        Eat.push_back(nextF);
+        solve(nextF, sum);
+        Eat.pop_back();
+        SharkI = I;
+        SharkJ = J;
+        SharkD = D;
+
+        for(int j = 0 ; j < 4 ; j++){
+            for(int k = 0 ; k < 4 ; k++){
+                map[j][k] = coppied_map[j][k];
+            }
+        }
+
+        for(int j = 1 ; j < 17 ; j++){
+            Fish[j].I = copied[j].first.first;
+            Fish[j].J = copied[j].first.second;
+            Fish[j].D = copied[j].second.first;
+            Fish[j].Eaten = copied[j].second.second;
         }
     }
 }
@@ -132,24 +223,17 @@ int main(){
     ios_base::sync_with_stdio(0);
     cin.tie(0); cout.tie(0);
 
-    for(int i = 0 ; i < 4 ; i++){
-        for(int j = 0 ; j < 8 ; j += 2){
-            int fish_num; cin >> fish_num;
-            int fish_dir; cin >> fish_dir;
-
-            map[i][j/2] = fish_num;
-            fish[fish_num].I = i;
-            fish[fish_num].J = j / 2;
-            fish[fish_num].Dir = fish_dir;
+    for(int i = 0 ; i < 4 ; i ++){
+        for(int j = 0 ; j < 4 ; j++){
+            int a, b; cin >> a >> b;
+            map[i][j] = a;
+            Fish[a].I = i;
+            Fish[a].J = j;
+            Fish[a].D = b;
         }
     }
-
-    int a = map[0][0];
-    v.push_back(map[0][0]);
-    fish[map[0][0]].eaten = true;
-    int D = fish[map[0][0]].Dir;
-    map[0][0] = 0;
-
-    shark_eat(0,0,D);
+    // show_map();
+    Eat.push_back(map[0][0]);
+    solve(map[0][0], 0);
     cout << ans << "\n";
 }
