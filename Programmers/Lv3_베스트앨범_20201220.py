@@ -18,10 +18,10 @@ def solution(genres, plays):
         play_list = genre_dic[key[0]]
         play_list = sorted(play_list, key=lambda x: (-x[0], x[1]))
 
-        for i in range(len(play_list)):
-            if i == 2:
+        for idx, num in enumerate(play_list):
+            if idx == 2:
                 break
-            answer.append(play_list[i][1])
+            answer.append(num[1])
 
     return answer
 
