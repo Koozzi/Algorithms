@@ -63,14 +63,3 @@ if __name__=="__main__":
         board.append(row)
 
     print(main(N, M, robot, board))
-
-
-'''
-
-3 5
-1 2 1
-1 1 1 1 1
-1 0 0 0 1
-1 1 1 1 1
-
-'''
