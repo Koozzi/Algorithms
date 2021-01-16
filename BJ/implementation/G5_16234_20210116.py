@@ -55,8 +55,8 @@ def solution(N, L, R, board):
         for i in range(N):
             for j in range(N):
                 if visit[i][j]: continue
-                visit, board, flag = people_move(i, j, N, L, R, board, visit)
-                if flag: update += 1
+                visit, board, moved = people_move(i, j, N, L, R, board, visit)
+                if moved: update += 1
         
         if update > 0: move_cnt += 1
         else: break
