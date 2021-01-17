@@ -4,7 +4,7 @@ def people_move(start_i, start_j, N, L, R, board,visit):
     move_dir = [[0,1],[0,-1],[1,0],[-1,0]]
 
     visit[start_i][start_j] = True # BFS 노드 방문 체크
-    region = [[start_i, start_j]] # 방문한 지역
+    region = [[start_i, start_j]] # 방문한 지역 [i, j]
     region_sum = board[start_i][start_j] # 지역을 방문할 때마다 값을 더해줌
     q = deque([[start_i, start_j]]) # BFS Queue
     moved = False # 새로운 노으(지역)에 방문한 적이 있는지
@@ -35,7 +35,7 @@ def people_move(start_i, start_j, N, L, R, board,visit):
     
     # 인구 이동이 없었으면 그대로 Return
     if not moved:
-        return visit, board, False
+        return visit, board, moved
 
     # 인구 이동이 있었다면 board을 수정해서 Return
     people_avg = region_sum // len(region)
@@ -43,7 +43,7 @@ def people_move(start_i, start_j, N, L, R, board,visit):
         I, J = idx[0], idx[1]
         board[I][J] = people_avg
 
-    return visit, board, True
+    return visit, board, moved
 
 def solution(N, L, R, board):
     move_cnt = 0
@@ -54,9 +54,9 @@ def solution(N, L, R, board):
 
         for i in range(N):
             for j in range(N):
-                if visit[i][j]: continue
-                visit, board, moved = people_move(i, j, N, L, R, board, visit)
-                if moved: update += 1
+                if not visit[i][j]:
+                    visit, board, moved = people_move(i, j, N, L, R, board, visit)
+                    if moved: update += 1
         
         if update > 0: move_cnt += 1
         else: break
