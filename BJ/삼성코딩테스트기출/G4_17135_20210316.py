@@ -42,7 +42,6 @@ for archer in comb_archer:
                             archer_enemy[idx].append([i,j,_D])
 
         # 적 죽임
-
         killed_enemy = set([])
         for idx in archer:
             if not archer_enemy[idx]: continue
