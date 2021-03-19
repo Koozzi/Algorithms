@@ -1,4 +1,5 @@
 from heapq import heappop, heappush
+from collections import deque
 
 def dijkstra(start_node):
     distance = [2e9 for i in range(V+1)]
@@ -13,10 +14,8 @@ def dijkstra(start_node):
                 heappush(heap, [weight + next_weight, next_node])
     
     for num in distance[1:]:
-        if num == 2e9:
-            print('INF')
-        else:
-            print(num)
+        if num == 2e9: print('INF')
+        else: print(num)
 
 V, E = map(int, input().split())
 start_node = int(input())
