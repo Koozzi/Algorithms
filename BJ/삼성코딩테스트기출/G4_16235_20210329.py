@@ -2,11 +2,14 @@
 # 22:46
 #
 
-def spring_summer():
+def summer(dead_tree):
+    for I,J,A in dead_tree:
+        food[I][J] += A // 2
+
+def spring():
     dead_tree = []
     for i in range(N):
         for j in range(N):
-            if not tree_board[i][j]: continue
             tree_board[i][j].sort()
             for idx, tree_age in enumerate(tree_board[i][j]):
                 if tree_age <= food[i][j]:
@@ -18,8 +21,7 @@ def spring_summer():
                     tree_board[i][j] = tree_board[i][j][:idx]
                     break
 
-    for I, J, A in dead_tree:
-        food[I][J] += A // 2
+    return dead_tree
 
 def fall():
     for i in range(N):
@@ -54,7 +56,7 @@ if __name__=="__main__":
         tree_board[I-1][J-1].append(A)
 
     for _ in range(K):
-        spring_summer()
+        summer(spring())
         fall()
         winter()
 
