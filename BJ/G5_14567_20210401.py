@@ -15,6 +15,7 @@ for current in range(1, N+1):
 
     max_num = 0
     for prev in dependency[current]:
+    
         max_num = max(max_num, dp[prev])
     
     dp[current] = max_num + 1
