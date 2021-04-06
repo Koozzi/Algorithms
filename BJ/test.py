@@ -1,52 +1,43 @@
-# def findNumberOfLIS(num):
-#     if len(nums) == 0:
-#         return 0
-#     length = [1] * len(nums)
-#     count = [1] * len(nums)
-#     length[0], count[0] = 1, 1
-#     for i in range(len(nums)):
-#         for j in range(i):
-#             if nums[j] < nums[i]:
-#                 if length[j] + 1 == length[i]:
-#                     count[i] += count[j]
-#                 elif length[j] + 1 > length[i]:
-#                     length[i] = length[j] + 1
-#                     count[i] = count[j]
+import sys
+sys.setrecursionlimit(10**9)
+N = int(sys.stdin.readline())
 
-#     max_len = max(length)
-#     return sum([count[i] for i in range(len(count)) if length[i] == max_len])
+graph = [[] for _ in range(N+1)]
 
-# print(findNumberOfLIS([1, 4, 2, 6, 5, 3]))
+for _ in range(N-1):
+    A, B, V = map(int, sys.stdin.readline().split())
+    graph[A].append([B, V])
+    graph[B].append([A, V])
 
-# def lis(a):
-# 	L = []
-# 	for (k,v) in enumerate(a):
-# 		L.append(max([L[i] for (i,n) in enumerate(a[:k]) if n<v] or [[]], key=len) + [v])
-# 	return max(L, key=len)
 
-# inp = [int(a) for a in input("List of integers: ").split(' ')]
-# print(lis(inp));
+first_node = []
+second_node = []
 
-st = [] 
 
-def find(inp, out) : 
-    if len(inp)== 0 : 
-        if len(out) != 0 : 
-            st.append(out) 
-        return
-  
-    find(inp[1:], out[:]) 
+def dfs(start, dist, visit, flag):
+    is_next = False
 
-    if len(out)== 0: 
-        find(inp[1:], inp[:1]) 
-    elif inp[0] > out[-1] : 
-        out.append(inp[0]) 
-        find(inp[1:], out[:]) 
-  
-# The input list 
-ls1 = [1, 4, 2, 6, 5, 3] 
-ls2 = [] 
-  
-# Calling the function 
-find(ls1, ls2) 
-print(st)
+    for node, value in graph[start]:
+        if visit[node] == 0:
+            is_next = True
+            visit[node] = 1
+            dfs(node, dist+value, visit, flag)
+            visit[node] = 0
+
+    if is_next == False:
+        if flag == 1:
+            first_node.append([start, dist])
+        else:
+            second_node.append([start, dist])
+
+
+v = [0]*(N+1)
+v[1] = 1
+dfs(1, 0, v, 1)
+s = sorted(first_node, key=lambda x: -x[1])
+
+vi = [0]*(N+1)
+vi[s[0][0]] = 1
+dfs(s[0][0], 0, vi, 2)
+ans = sorted(second_node, key=lambda x: -x[1])
+print(ans[0][1])
