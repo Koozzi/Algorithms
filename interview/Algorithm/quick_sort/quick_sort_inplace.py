@@ -24,6 +24,6 @@ def _sort(A, first, last):
     _sort(A, right + 1, last)
 
 if __name__=="__main__":
-    init_list = [4, 2, 5, 8, 6, 2, 3, 7, 10]
-    _sort(init_list, 0, len(init_list) - 1)
-    print(*init_list)
+    Ab = [4, 2, 5, 8, 6, 2, 3, 7, 10]
+    _sort(Ab, 0, len(Ab) - 1)
+    print(*Ab)
